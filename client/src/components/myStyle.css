@@ -1,0 +1,10 @@
+.orangBut{
+    background: linear-gradient(99.42deg, #F8A170 14.73%, #FFCD61 97.52%);
+  border-radius: 10px;
+  color: #fff;
+  width: 100%;
+  margin-top: 8%;
+}
+label{
+    text-align: left;
+}
