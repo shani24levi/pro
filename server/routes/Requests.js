@@ -4,36 +4,29 @@ const requsts = express.Router();
 const control = require('../controller/Requests');
 
 
-requsts.get('/', (req,res)=> {   //includes user and owner aprtments
+requsts.get('/', (req,res)=> {   
     control.getAllRequsts (req,res);
 });
 
-requsts.get('/userApartment', (req,res) =>{ 
-    control.getRequstsUserID(req,res);
-});
-
-requsts.get('/ownerApartment', (req,res)=> { 
-    control.getRequstsOwnerId(req,res);
+requsts.get('/:requestId', (req,res) =>{ 
+    control.getRequstsById(req,res);
 });
 
 
 requsts.post('/create', (req,res)=> { 
-    control.craeteRequsts(req,res);
+    control.craeteRequst(req,res);
 });
 
 
-requsts.delete('/deleteRequst', (req,res)=>{ //only for user
+requsts.delete('/delete/:requestId', (req,res)=>{ 
     control.deleteRequsts(req,res);
 });
 
 
-requsts.put('/editeApartment', (req,res)=>{ 
+requsts.put('/edite/:requestId', (req,res)=>{ 
     control.editeApartment (req,res);
 });
 
-requsts.put('/editeRequst', (req,res)=>{ 
-    control.editeRequst (req,res);
-});
 
 
 

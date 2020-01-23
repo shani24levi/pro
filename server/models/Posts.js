@@ -2,14 +2,30 @@ const mongoose =require('mongoose');
 const { Schema, model } = require('mongoose');
 
 const PostSchema = new Schema({
-    title:{type:String},
-    subtitle :{type: String}, 
-    userID :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },//???
-    aprtmentID: {type: mongoose.Schema.Types.ObjectId, ref: 'Apartments', required: true},
-    messag: {type:String},
-    star: {type: Number ,default: 1 }, //for ranc the apartment by user
-    likes: {type: Number , default: 0 },
-    datePost: { type: Date, default: Date.now}
+    user :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
+    aprtment: {type: mongoose.Schema.Types.ObjectId, ref: 'Apartments', required: true},
+    text: {type:String, required:true},
+    first_name: {type:String},
+    avatar: {type:String},
+
+    star: [{
+        user :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
+    }], //for ranc the apartment by user
+
+    likes:[{
+        user :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
+    }],
+    comments: [
+        {
+            user :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
+            text: {type:String, required:true},
+            first_name: {type:String},
+            avatar: {type:String},
+            date:{type:Date , default: Date.now}
+
+        }
+    ],
+    date:{type:Date , default: Date.now}
 }, { collection: 'posts' });
 
 

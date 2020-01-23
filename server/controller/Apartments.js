@@ -8,7 +8,6 @@ const {craeteApartmentValidation}  = require('../valdition');
 
 class ApartmentController {
     static async craeteApartment(req,res){
-
          try{
             //validat the data befor create
             const {error} =  craeteApartmentValidation(req.body);

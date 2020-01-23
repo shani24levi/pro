@@ -1,60 +1,61 @@
 const express= require('express');
 const mongoose = require('mongoose');
-const joi = require('joi');
-var cors = require('cors');
 const Post =require('../models/Posts');
-//const User =require('../models/Users');
-const {creatPostValidation}  = require('../valdition');
+const User =require('../models/Users');
+const Apartment =require('../models/Apartments');
 
-//const Pusher = require('pusher');
-//var Pusher = new Pusher({
-//    appId: '934131',
-//    key: '1b6ba9c2b29991926eb2',
-//    secret: 'f5ee07c7a8614ec99511',
-//    cluster: 'eu',
-//    encrypted: true
-//});
+
 
 
 class PostsController {
+
+    //for testing:
     static async verifyUser(req,res){
         return res.json({posts: {title: 'hello' , desciption: 'wish it works'} });
     }
-
+    ///-----------///
 
     static async createPost(req,res){
         try{
-            //validat the data
             const {error} =  creatPostValidation(req.body);
             if(error)
                 return res.status(400).send(error.details[0].message);
 
-            //chacking if all form is filed
-            if (!req.body.title || !req.body.messag || !req.body.subtitle || !req.body.star) {
-                return res.status(404).send('Missing Information try again');
-            };
-
-            //create a new post using pusher(real time)
+            //create a new post 
             const today=new Date()
-            let postData = new Post({ 
-                title: req.body.title,
-                subtitle: req.body.subtitle,
-                messag: req.body.messag,
-                star: req.body.star, 
+            let newPost = new Post({ 
+                text: req.body.text,
+                first_name: req.body.first_name, //will come from redax
+                avatar: req.body.avatar,
+                user: req.user._id, //in the token user 
+                //??//apartment: req.apartment._id, //apartment token...???
                 created: today
             });
 
-            new Post(postData).save().then(post => {
-                pusher.trigger('messag-poll', 'my-post', {
-                  star: parseInt(post.star),
-                  messag: post.messag
-            });
-            
-            res.status(200).json({ success: true, message: 'Post seccsesfuly' });
-            res.send('Post seccsesfuly');
-        });
-            //const savePost = await postData.save();
-            //res.status(200).send(savePost);
+            const savePost = newPost.save();
+            if(savePost){
+   
+            /*
+            *Update collections in DB
+            *
+            * -put post in array posts[] user id (modole profile OR user)
+            * 
+            * -put post in array posts[] apartment id (modle apartment)
+            * 
+            * 
+            *  
+            * need to do thet.......done in profile in delete user..........
+            */
+
+
+
+                //Save post
+                return res.status(200).send({
+                    message: 'Post created sucssfly ',
+                    post: savePost
+                })
+            } else return res.status(404).send({message: 'Save faild'});
+
         }catch (err) {
             console.error( 'some error occurred', err) 
             res.status(500).send(err.message); 

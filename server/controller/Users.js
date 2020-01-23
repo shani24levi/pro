@@ -72,6 +72,18 @@ class UserController {
                 role: req.body.role,
                 created: today
             });
+
+            //save user token id in the header in payload
+            //const payload = {user: { _id: user._id }};
+            //jwt.sign(
+            //    payload,
+            //    //process.env.SECRET_TOKEN
+            //    (err, token) => {
+            //      if (err) throw err;
+            //    }
+            //);
+
+
             if(userData){
                 const saveUser = await userData.save();
                 res.status(200).send({
@@ -119,29 +131,21 @@ class UserController {
             const validPass = await bcrypt.compare(req.body.password, user.password); //comparimg this.user to the data.psss
            if(!validPass) return res.status(400).send({message:'Invalid Password'});
            
-            //login sucssfully by db //sign the token
-            if(validPass){
-                const paylode= { id:user._id , name: user.first_name, email: user.email, role: user.role , avatar: user.avatar} //Craet jwt paylod
-                jwt.sign(
-                    paylode , 
-                    process.env.VERY_SECRET, 
-                    {expiresIn: 3600},
-                    (err, token)=>{
-                        res.json({
-                            message: 'Seccsess',
-                            token: 'Bearer '+ token
-                        });
-                    }
-                );
-            }
+            //sign the token for paivet routs . only the id user
+            //const payload= {_id: user._id , role :user.role}
+            //const token =jwt.sign(payload , process.env.TOKEN_SECRET);
 
+            const token =jwt.sign({_id: user._id} , process.env.TOKEN_SECRET);
+
+            //if user(owner) have apartment array  with id so show details
             if(user.apartmnts && user.apartmnts.length > 0 ){
                 User.populate('apartmnts', 'address', 'city'); //only show address,city.
             }
 
-            res.status(200).send({
+            res.status(200).header('user-token', token).send({
                 message: 'Logdin seccsfully',
-                User: user
+                User: user,
+                token: token
             });   
         }catch (err) {
             console.error( 'some error occurred', err) 
@@ -174,90 +178,15 @@ class UserController {
                 return res.status(401).send({message:'Users not found'});
             }
             else  
-                return res.status(200).send({message:'All Users', users: Exist});
+                return res.status(200).send({
+                    message:'All Users', 
+                    users: Exist
+                });
         }catch (err) {
             console.error( 'some error occurred', err) 
             res.status(500).send(err.message);        
         };        
     }
-
-    static async profileUser(req,res){ 
-        try{
-            const {id =null} =req.params; 
-            const userExist= await User.findOne({id});
-            if (!userExist){
-                return res.status(401).send({message:'User is not found'});
-            }
-            else  
-                return res.status(200).send({message:'Welcom User to profile!'});
-        }catch (err) {
-            console.error( 'some error occurred', err) 
-            res.status(500).send(err.message);        
-        };        
-    }
-
-    static async editeProfile (req,res){
-        try{
-            //Chacking which params in the schema wants to updat
-            const {id}= req.params._id;
-            const updateObj={};
-            for(const obj of req.body){ //in postman need to do as arry [{....,.....}] else theres error
-                updateObj[obj.propName]= obj.value;
-            }
-            if(!id)
-                return res.status(400).send({ message: 'User is not found' }); 
-            else{
-                const result = await User.update(
-                    {_id: id }, 
-                    {$set: updateObj }
-                );
-                if(result){ //chack thet the data is valid
-                    res.status(200).json(result).send({
-                        message: 'User Update',
-                        updated:  result
-                    });
-                }else{
-                    res.status(404).send({message: 'Some thing wrong with data to updat'});
-                }
-            }
-        }catch (err) {
-            console.error( 'some error occurred', err) 
-            res.status(500).send(err.message); 
-        }       
-    }; 
-    
-    static async removeProfile (req,res){
-        try{
-            const {idRemove} =req.params._id; 
-            if(idRemove){
-                const removeIt = await User.deleteOne({idRemove}); 
-                if(removeIt){
-                    res.status(200).json(removeIt);
-                    res.send({message: `User has been deleted`});
-                }
-                else res.status(404).send({ message:`Some thing wrong with data`});
-            }
-            else{
-                res.status(400).send({message:`not deleted`}); //never can happen . its unnessessery .
-            }
-        }catch (err) {
-        console.error( 'some error occurred', err) 
-        res.status(500).send(err.message); 
-    } }  
-    
-    static async postsByUser (req,res){
-        const { id } = req.params;
-        if(id){
-            const userPost = await User.findById(id).populate('posts'); //like fiirEach loop geting posts     
-            res.status(200).json(userPost);
-            res.send(`User post : ${userPost}`);
-        
-        }
-        else{
-            res.status(400).send(`There is not posts from user`);
-        }
-    }  
-
 
 }
 
