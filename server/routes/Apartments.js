@@ -4,6 +4,19 @@ const apartments = express.Router();
 const control = require('../controller/Apartments');
 
 
+apartments.post('/', (req,res)=> { 
+    control.craeteApartment(req,res);
+});
+
+
+apartments.put('/:apartmentId', (req,res)=>{ 
+    control.editeApartment(req,res);
+});
+
+apartments.delete('/:apartmentId', (req,res)=>{ 
+    control.deleteApartment(req,res);
+});
+
 apartments.get('/', (req,res) =>{ 
     control.getAllApartments(req,res);
 });
@@ -13,24 +26,11 @@ apartments.get('/:apartmentId', (req,res)=> { //BY APARTMENT ID
 });
 
 apartments.get('/user/:userId', (req,res)=> { 
-    control.getRequstsByuser(req,res);
+    control.getApartmentByuser(req,res);
 });
 
-apartments.post('/create', (req,res)=> { 
-    control.craeteApartment(req,res);
-});
-
-
-apartments.put('/edite/:apartmentId', (req,res)=>{ 
-    control.editeApartment(req,res);
-});
-
-apartments.delete('/delete/:apartmentId', (req,res)=>{ 
-    control.deleteApartment(req,res);
-});
-
-//choose to do as get for not loss it in the next page
-apartments.get('/search/:city/:', (req,res)=>{ 
+//dont konw how to do as get...
+apartments.post('/search', (req,res)=>{ 
     control.search(req,res);
 });
 

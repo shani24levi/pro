@@ -77,6 +77,12 @@ const creatPostValidation = (data)=>{
 }
 
 
+//Validtion functions
+module.exports =function validatProfileInput(data){
+    data.apartmnts = 'undefined' ? '' : data.apartmnts ;
+}
+
+
 
 module.exports.regisrerValidation= regisrerValidation;
 module.exports.loginValidation= loginValidation;

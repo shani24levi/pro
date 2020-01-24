@@ -12,12 +12,12 @@ class ApartmentController {
             //validat the data befor create
             const {error} =  craeteApartmentValidation(req.body);
             if(error)
-                return res.status(404).send(error.details[0].message);
+                return res.status(400).send(error.details[0].message);
 
             //chacking if the apartment is alrdy in the DB
             const apartmentExist = await Apartment.findOne({address: req.body.address ,apartmentNum:req.body.apartmentNum});
             if(apartmentExist)
-               return res.status(404).send('Apartment allrady exists');
+               return res.status(402).send('Apartment allrady exists');
 
             //create a new user
             const today=new Date()
@@ -40,7 +40,7 @@ class ApartmentController {
                 });
 
             } 
-            else res.status(404).send({message: 'Something went wrong craetig apartment'});
+            else res.status(401).send({message: 'Something went wrong craetig apartment'});
         }
         catch (err) {
             console.error( 'some error occurred', err) 
@@ -68,7 +68,7 @@ class ApartmentController {
                         updated:  result
                     });
                 }else{
-                    res.status(404).send({message: 'Some thing wrong with data to updat'});
+                    res.status(401).send({message: 'Some thing wrong with data to updat'});
                 }
             }
         }
@@ -100,11 +100,11 @@ class ApartmentController {
     static async getAllApartments(req,res){
         try{
             const allApartments = await Apartment.find().populate('owner', 'first_name last_name email apartmnts requests posts _id'); //get the details owner    
-            if (!allApartments) {
-                res.status(200).json("There is no Apartments Avlival to Show");
+            if (!allApartments) { 
+                res.status(404).json("Apartments not found");
             } else {
                 res.status(200).json(allApartments).send({
-                    message: 'All Apartments found',
+                    message: 'All Apartments',
                     allApartments: allApartments
                 })
             }
@@ -119,14 +119,13 @@ class ApartmentController {
     static async getApartmentsById(req,res){
         try{
             const apartments = await Apartment.findById(req.params.apartmentId).populate('owner', 'first_name last_name email apartmnts _id'); //get the details owner  
-        
 
             if(!apartments)
-                return res.status(200).send({
-                    message: 'Aartment is not found by the id',
+                return res.status(404).send({
+                    message: 'Aartment not found by the id',
                 })
-            if(apartments==null) //desnt work dont know why... retuns null.
-                return res.status(200).send({
+            if(apartments == 0) //desnt work dont know why... retuns null.
+                return res.status(404).send({
                     message: 'Aartments not found',
                 })
             
@@ -140,19 +139,18 @@ class ApartmentController {
         };
     }
 
-    //////by user id (ownwr only) //need fixing
-    static async getRequstsByuser(req,res){
+    //////by user id //need fixing becouse the null.....
+    static async getApartmentByuser(req,res){
         try{
             const userid= req.params.userId;
             const apartments = await Apartment.find({userid}).populate('owner', 'first_name last_name email apartmnts _id'); //get the details owner  
         
-
             if(!apartments)
-                return res.status(200).send({
-                    message: 'Aartment is not found by the id',
+                return res.status(404).send({
+                    message: 'Aartment not found by the id',
                 })
             if(apartments==null) //desnt work dont know why... retuns null.
-                return res.status(200).send({
+                return res.status(404).send({
                     message: 'Aartments not found',
                 })
             
@@ -165,6 +163,9 @@ class ApartmentController {
             res.status(500).send(err.message);        
         };
     }
+
+
+
 
     //as a post requst 
     static async search(req,res){

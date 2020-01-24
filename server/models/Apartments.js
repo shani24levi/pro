@@ -29,9 +29,9 @@ const ApartmentSchema = new Schema({
     numOfIntrested: {type: Number},
     status: {type: String}, //apartmet is alivlibal or ocupied 
     x: {type: String}, //this is for google maps - will be defind only in the view - client will chose dot on map
-    y: {type: String}
+    y: {type: String},
 
-    //postID :{ type: mongoose.Schema.Types.ObjectId, ref: 'Post'},
+    posts :{ type: mongoose.Schema.Types.ObjectId, ref: 'Post'},
     //myInBox: [{type: mongoose.Schema.Types.ObjectId, ref: 'InBox'}],
     //star:{type:Number} //get this from all users in Post schema
 }, { collection: 'aprtments' });
