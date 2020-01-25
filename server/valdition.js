@@ -38,8 +38,7 @@ const craeteApartmentValidation = (data)=>{
 const craeteRequestsValidation = (data)=>{
     const schema={
         apartmnt: joi.string().required(),
-        who: joi.string().required(),
-        owner: joi.string().required(),
+        resiving: joi.string().required(),
         purpose: joi.string().required()
     };
     return joi.validate(data, schema);
