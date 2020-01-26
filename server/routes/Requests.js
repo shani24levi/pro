@@ -24,9 +24,15 @@ requsts.delete('/',vertify, (req,res)=>{
     control.deleteAllRequsts(req,res);
 });
 
-//choose not to do update requst- when send requst cant change it 
+requsts.put('/:requestId',vertify, (req,res)=>{ 
+    control.updetOneRequsts(req,res);
+});
 
-requsts.get('/', (req,res)=> {   
+requsts.get('/',vertify, (req,res)=> {   
+    control.getMyRequsts(req,res);
+});
+
+requsts.get('/all', (req,res)=> {   
     control.getAllRequsts(req,res);
 });
 
@@ -38,6 +44,16 @@ requsts.get('/:requestId', (req,res) =>{
 //by id of user
 requsts.get('/user/:userId', (req,res) =>{ 
     control.getRequstsByUserId(req,res);
+});
+
+//by id of apartment
+requsts.get('/apartment/:apartmntId', (req,res) =>{ 
+    control.getRequstsByApartment(req,res);
+});
+
+//by id of owner of apartment
+requsts.get('/owner/:ownerId',vertify, (req,res) =>{ 
+    control.getRequstsByOwner(req,res);
 });
 
 

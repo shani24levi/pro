@@ -2,15 +2,20 @@ const express= require('express');
 var cors = require('cors');
 const apartments = express.Router();
 const control = require('../controller/Apartments');
+const vertify = require('../config/verifyToken');
 
 
-apartments.post('/', (req,res)=> { 
+apartments.post('/',vertify, (req,res)=> { 
     control.craeteApartment(req,res);
 });
 
 
-apartments.put('/:apartmentId', (req,res)=>{ 
-    control.editeApartment(req,res);
+//apartments.put('/:apartmentId', (req,res)=>{ 
+//    control.editeApartment(req,res);
+//});
+
+apartments.put('/:apartmentId',vertify, (req,res)=>{ 
+    control.editeApartment2(req,res);
 });
 
 apartments.delete('/:apartmentId', (req,res)=>{ 

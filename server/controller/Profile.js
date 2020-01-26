@@ -53,9 +53,9 @@ class ProfileController {
     static async createProfile(req,res){
         try{
            //validat the data befor create
-           const {error} =  profileValidation(req.body);
-           if(error)
-               return res.status(400).send(error.details[0].message);
+           //const {error} =  profileValidation(req.body);
+           //if(error)
+            //   return res.status(400).send(error.details[0].message);
 
            //chacking if the user is in the DB
            const userExist = await User.findById({_id: req.user._id});
@@ -68,16 +68,21 @@ class ProfileController {
                 return res.status(401).send({message: 'User Profile allrady exists'});  
            else {
                //Create new profile
-               let profileData = new User({ 
+               let profileData = new Profile({ 
                    _id: new mongoose.Types.ObjectId(),
                    user: req.user._id,
                    hendler: req.body.hendler,
+                   status: req.body.status,
+                   disciption: req.body.disciption,
+                   myReantals: req.body.myReantals,
+                   aboutMe: req.body.aboutMe,
+                   social: req.body.social,
                });
    
                if(profileData){
                    const saveUser = await profileData.save();
                    res.status(200).send({
-                       message: 'User registered',
+                       message: 'User profile created',
                        User: saveUser
                    });
                 }
@@ -145,20 +150,21 @@ class ProfileController {
 
         const profileExist = await Profile.findOne({user: req.user._id});
         if(profileExist){ 
-            //Update
+            //Update //(from some reson dont enter to update....)
            const upadtUser= await Profile.findOneAndUpdate({user: req.user._id} , {$set: profileFildes}, {new: true});
             if(upadtUser)
             return res.status(200).send({message: 'User Profile updated' , Update: upadtUser });  
         }
         else {
             //craete:
-
-            const newProfile = new Profile(profileFildes).save();
+            
+            const newProfile = new Profile(
+                //_id: new mongoose.Types.ObjectId(),
+                profileFildes
+            )
+            const saveIt =await newProfile.save().then(t => t.populate('user' , 'first_name last_name').execPopulate());
             if(newProfile)
-                return res.status(200).send({message: 'shaniii',newProfile: profileFildes  , newProfile:newProfile});  
-
-            //return res.status(402).send({message: 'some thing went wrong updated' });  
-
+                return res.status(200).send({message: 'Prifile creaded succfuly',newProfile1: profileFildes  , saveed: saveIt});  
             }
         }
         catch (err) {
@@ -166,7 +172,6 @@ class ProfileController {
             res.status(500).send(err.message);        
         };
     }
-
 
     static async myReantalAdd(req,res){
         try{

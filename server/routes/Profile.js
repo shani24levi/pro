@@ -13,7 +13,7 @@ profile.get('/user/:userId', (req,res)=>{
     control.profileUserById(req,res);
 });
 
-profile.get('/', (req,res)=>{
+profile.get('/all/', (req,res)=>{
     control.getAllProfile(req,res);
 });
 
