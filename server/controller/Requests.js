@@ -10,13 +10,12 @@ const {craeteRequestsValidation}  = require('../valdition');
 
 class requstController {
 
-    //missing a check--always enters ther -need chacking agin....
     static async craeteRequst(req,res){
         try{
             //validat the data befor create
-            const {error} =  craeteRequestsValidation(req.body);
-            if(error)
-                return res.status(404).send(error.details[0].message);
+            //const {error} =  craeteRequestsValidation(req.body);
+            //if(error)
+            //    return res.status(404).send(error.details[0].message);
 
             //chacking if the requst from req.user._id is alrdy send
             const requestExist = await Requests.findOne({sending: req.user._id ,resiving:req.body.resiving, purpose:req.body.purpose});
@@ -32,21 +31,12 @@ class requstController {
             if(String(user1Exist)==String(user2Exist)) 
                 return res.status(402).send({message: 'Users cant himself'});
   
-                //dont know ...it come to this each time
-
-            //Check if sending/resiving has the apartment id     
-            //const apartment1Exist = await Apartment.findOne({owner: req.user._id, _id: req.body.apartmnt});
-            //const apartment2Exist = await Apartment.findOne({owner: req.body.resiving, _id: req.body.apartmnt});
-            //if(!apartment2Exist || !apartment1Exist)
-            //    return res.status(404).send({message: 'Apartment chosen not found'});
-     
             if(user1Exist && user2Exist) { //when both exist:
                 //create a new requst
                 const today=new Date()
                 let requstData = new Requests({ 
                     _id: new mongoose.Types.ObjectId(),
                     sending: req.user._id,
-                    senderRole: req.user.role,
                     resiving: req.body.resiving,
                     purpose: req.body.purpose,
                     text: req.body.text,
@@ -58,15 +48,21 @@ class requstController {
                 if(requstData){
                     //save it in array requsts in Apartment collectin:
                     const apartmentReq =await Apartment.findById({_id: req.body.apartmnt});
-                    if (!apartmentReq)
-                        return res.status(404).send({message: 'Apartment not found' });
-                    apartmentReq.requsts.unshift({resiving: req.body.resiving} ); 
-                    apartmentReq.save();
+
+                            
                     //save the requst
+                    console.log(req.body.apartmnt);
+                    console.log(apartmentReq);
                     const saveRequst= await requstData.save().then(t => t.populate('sending resiving', 'first_name last_name').execPopulate()) //(from stack overflow!!!!)
+                    console.log(req.body.apartmnt);
+                    console.log(apartmentReq);
+
+                    apartmentReq.requsts.unshift({requestIdd: req.body.resiving} );  //need fixing 
+                    apartmentReq.save();
+
                     res.status(200).send({
                         message: 'Requst created Sucssfly',
-                        requst: saveRequst
+                         requst: saveRequst
                     });
                 }else res.status(402).send({message: 'Something went wrong craetig requst'});
             } 
@@ -194,7 +190,7 @@ class requstController {
             const request = await Requests.find({apartmnt: req.params.apartmntId});
             if(!request)
                 return res.status(404).send({
-                    message: 'Request not found',
+                    message: 'Request not found'
                 })
             else 
                 return res.status(200).send({
@@ -231,12 +227,6 @@ class requstController {
 
     static async updetOneRequsts(req,res){
         try{
-            //chacking if in the DB
-            const userExist = await Requests.findById({_id: req.params.requestId});
-            if(!userExist)
-                return res.status(404).send({message: 'Request not found'});
-    
-            //Udete     
            //if login user is not the sender of the requst so can only chang stutuse 
            const request = await Requests.findById(req.params.requestId)
            if (!request)
@@ -246,26 +236,23 @@ class requstController {
                 if(req.body.status) apartmentFileds.status=req.body.status;
 
                 //choose not to delete the requst and only chang param 
-                //user will choose here aprovedByUser/rejectedByUser --this is the end of the requst.
-                /////errorrr/////if(String(req.body.status) != String("aprovedByUser") || String(req.body.status) != String("rejectedByUser") ){
-                /////////    return res.status(404).send({message: 'status must be aprovedByUser /  rejectedByUser '});
-                //} 
+   
                 //Make sure cant chang a requst thet allrdy repled to:
                 if(String(request.status) == 'reply'){
                     return res.status(404).send({message: 'this requst ended'});
                 }
 
                 //Allso sent requst to the sending the updete
-                const requstBack =new Requests({
-                    _id: new mongoose.Types.ObjectId(),
-                    apartmnt: req.params.apartmentId,
-                    sending: req.user._id,
-                    resiving: request.sending, //now the resive to the sender a reply
-                    purpose: 'reply',
-                    status: req.body.status
-                });
+                //const requstBack =new Requests({
+                //    _id: new mongoose.Types.ObjectId(),
+                //    apartmnt: req.params.apartmentId,
+                //    sending: req.user._id,
+                //    resiving: request.sending, //now the resive to the sender a reply
+                //    purpose: 'reply',
+                //    status: req.body.status
+                //});
                 //save in DB the requst
-                await requstBack.save().then(t => t.populate('sending resiving', 'first_name last_name').execPopulate())            
+                //await requstBack.save().then(t => t.populate('sending resiving', 'first_name last_name').execPopulate())            
 
                 //Update 
                 const upadt= await Requests.findOneAndUpdate({_id: req.params.requestId} , {$set: apartmentFileds}, {new: true}).populate('sending resiving', 'first_name last_name');

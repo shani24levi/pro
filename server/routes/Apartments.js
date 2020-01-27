@@ -10,12 +10,18 @@ apartments.post('/',vertify, (req,res)=> {
 });
 
 
-//apartments.put('/:apartmentId', (req,res)=>{ 
-//    control.editeApartment(req,res);
-//});
-
 apartments.put('/:apartmentId',vertify, (req,res)=>{ 
     control.editeApartment2(req,res);
+});
+
+
+apartments.post('/invated/:apartmentId/:userId',vertify, (req,res)=>{ 
+    control.invated(req,res);
+});
+
+//any users can chang 'usersComing filde'
+apartments.get('/comingOpen/:apartmentId',vertify, (req,res)=>{ 
+    control.comming(req,res);
 });
 
 apartments.delete('/:apartmentId', (req,res)=>{ 

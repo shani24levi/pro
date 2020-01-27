@@ -35,7 +35,8 @@ const craeteApartmentValidation = (data)=>{
         neebrhood: joi.string(),
         saftyChack: joi.string(),
         desciption: joi.string(),
-        loftSize: joi.string()
+        loftSize: joi.string(),
+        openHouse : joi.json()
 
     };
     return joi.validate(data, schema);

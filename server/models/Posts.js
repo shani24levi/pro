@@ -10,6 +10,7 @@ const PostSchema = new Schema({
 
     star: [{
         user :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
+        value: {type:Number}
     }], //for ranc the apartment by user
 
     likes:[{

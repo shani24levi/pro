@@ -55,7 +55,7 @@ class PostsController {
 
     static async getPostById(req,res){
         try{
-            const allPosts = await Post.findById(req.params.postId);
+            const allPosts = await Post.findById(req.params.postId).populate('aprtment user', 'first_name last_name email city address price'); 
             if(!allPosts)
                 return res.status(404).send({message: 'Post not found' })
             
@@ -70,11 +70,25 @@ class PostsController {
     static async getPostByUserId(req,res){
         try{
             const user =req.params.userId;
-            const allPosts = await Post.find({user});
+            const allPosts = await Post.find({user}).populate('aprtment user', 'first_name last_name email city address price'); 
             if(!allPosts)
                 return res.status(404).send({message: 'Posts not found by this user' })
             
             return res.status(200).send({message: 'All User Posts found' , Posts: allPosts })
+
+        }catch (err) {
+            console.error( 'some error occurred', err) 
+            res.status(500).send(err.message); 
+        } 
+    }
+
+    static async getPostByApprId(req,res){
+        try{
+            const aprtment = await Post.find({aprtment:req.params.apartmntId }).populate('aprtment user', 'first_name last_name email city address price'); 
+            if(!aprtment)
+                return res.status(404).send({message: 'Posts not found' })
+            console.log(aprtment);
+            return res.status(200).send({message: 'All User Posts found' , Posts: aprtment })
 
         }catch (err) {
             console.error( 'some error occurred', err) 
@@ -188,10 +202,11 @@ class PostsController {
                 avatar: req.body.avatar,
                 user: req.user._id
             }
+
             //Add to comment array 
             post.comments.unshift(neComment);
             //Save in DB
-            const saveIt = post.save();
+            const saveIt = post.save().then(t => t.populate('user', 'first_name last_name email').execPopulate()) ;
             if (!saveIt)
                 return res.status(401).send({message: 'Something went wrong with data' });    
             

@@ -23,6 +23,11 @@ posts.get('/user/:userId' ,(req,res)=>{
     control.getPostByUserId(req,res);
 });
 
+//get profile by user  id
+posts.get('/apartment/:apartmntId' ,(req,res)=>{ 
+    control.getPostByApprId(req,res);
+});
+
 
 posts.delete('/:postId' ,vertify,(req,res)=>{ 
     control.deletePost(req,res);
