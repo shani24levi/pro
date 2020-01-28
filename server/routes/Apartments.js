@@ -40,7 +40,7 @@ apartments.get('/user/:userId', (req,res)=> {
     control.getApartmentByuser(req,res);
 });
 
-//dont konw how to do as get...
+
 apartments.post('/search', (req,res)=>{ 
     control.search(req,res);
 });

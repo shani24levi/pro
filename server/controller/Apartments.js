@@ -88,20 +88,6 @@ class ApartmentController {
             if(req.body.houre) apartmentFileds.openHouse.houre=req.body.houre;
             if(req.body.openANDpublic) apartmentFileds.openANDpublic=req.body.openANDpublic;
 
-
-                ///set a requst to user whos invaited:    
-                // const requst =new Requests({
-                //     _id: new mongoose.Types.ObjectId(),
-                //     apartmnt: req.params.apartmentId,
-                //     sending: req.user._id,
-                //     resiving: req.body.invated,
-                //     purpose: 'invation',
-                //     status: 'invited'
-                // });
-                // //save in DB the requst
-                //await requst.save().then(t => t.populate('sending resiving', 'first_name last_name').execPopulate()) 
-                //apartmentFileds.openHouse.invated = req.body.invated;
-
             //Update 
             const upadtUser = await Apartment.findOneAndUpdate(
                 {_id: req.params.apartmentId} ,
@@ -141,7 +127,21 @@ class ApartmentController {
             else
                 //Add user id to array
                 openHome.invated.unshift({ user: req.params.userId });
-                openHome.save().then(openHome=> res.status(200).send({message: 'User has added to the Invites open House'}));
+                openHome.save()
+                
+                ///set a requst to user whos invaited:    
+                 const requst =new Requests({
+                     _id: new mongoose.Types.ObjectId(),
+                     apartmnt: req.params.apartmentId,
+                     sending: req.user._id,
+                     resiving: req.params.userId,
+                     purpose: 'invation',
+                     status: 'invited'
+                 });
+                // //save in DB the requst
+                await requst.save().then(t => t.populate('sending resiving', 'first_name last_name').execPopulate()) 
+                
+                .then(openHome=> res.status(200).send({message: 'User has added to the Invites open House'}));
         }catch (err) {
             console.error( 'some error occurred', err) 
             res.status(500).send(err.message); 
@@ -269,8 +269,6 @@ class ApartmentController {
     }
 
 
-
-//// need fixing 
     static async search(req,res){
         try{
             const searchFilds = {};

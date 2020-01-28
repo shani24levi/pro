@@ -5,11 +5,14 @@ const { Schema, model } = require('mongoose');
 const ApartmentSchema = new Schema({
     _id : mongoose.Schema.Types.ObjectId,
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
-    //rentTO: {type: mongoose.Schema.Types.ObjectId, ref: 'Users' },    
-    requsts: [ {reqId: {type: mongoose.Schema.Types.ObjectId, ref: 'Requests'}}],
-    star: [{
-        user :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
-    }], //for ranc the apartment by user
+    requsts: [
+        {reqId: {type: mongoose.Schema.Types.ObjectId, ref: 'Requests'}
+    }],
+    //star: [{
+    //    user :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
+    //    value: {type:Number}
+
+    //}], //for ranc the apartment by user
 
     city:{type:String},
     address :{type: String},

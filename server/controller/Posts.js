@@ -186,9 +186,9 @@ class PostsController {
     static async commentPost(req,res){
         try{
             //validat thet we have at list text in the comment 
-            const {error} =  creatPostValidation(req.body);
-            if(error)
-                return res.status(400).send(error.details[0].message);
+            //const {error} =  creatPostValidation(req.body);
+            //if(error)
+            //    return res.status(400).send(error.details[0].message);
 
             //Chack if post exists
             const post = await Post.findById(req.params.postId);

@@ -45,6 +45,10 @@ posts.post('/comment/:postId' ,vertify,(req,res)=>{
     control.commentPost(req,res);
 });
 
+posts.post('/star' ,vertify,(req,res)=>{ 
+    control.starIt(req,res);
+});
+
 
 
 

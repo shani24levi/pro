@@ -168,7 +168,7 @@ class requstController {
 
     static async getRequstsByUserId(req,res){
         try{
-            const request = await Requests.findOne({resiving: req.params.userId}).populate('sending resiving', 'first_name last_name');
+            const request = await Requests.find({resiving: req.params.userId}).populate('sending resiving', 'first_name last_name');
             if(!request)
                 return res.status(404).send({
                     message: 'Request not found by the user',
@@ -187,7 +187,7 @@ class requstController {
 
     static async getRequstsByApartment(req,res){
         try{
-            const request = await Requests.find({apartmnt: req.params.apartmntId});
+            const request = await Requests.find({apartmnt: req.params.apartmntId}).populate('sending resiving apartmnt', 'first_name last_name address city price')
             if(!request)
                 return res.status(404).send({
                     message: 'Request not found'
@@ -243,16 +243,17 @@ class requstController {
                 }
 
                 //Allso sent requst to the sending the updete
-                //const requstBack =new Requests({
-                //    _id: new mongoose.Types.ObjectId(),
-                //    apartmnt: req.params.apartmentId,
-                //    sending: req.user._id,
-                //    resiving: request.sending, //now the resive to the sender a reply
-                //    purpose: 'reply',
-                //    status: req.body.status
-                //});
+                const requstBack =new Requests({
+                    _id: new mongoose.Types.ObjectId(),
+                    apartmnt:request.apartmnt,
+                    sending: req.user._id,
+                    resiving: request.sending, //now the resive to the sender a reply
+                    purpose: 'reply',
+                    status: req.body.status
+                });
+                console.log(requstBack)
                 //save in DB the requst
-                //await requstBack.save().then(t => t.populate('sending resiving', 'first_name last_name').execPopulate())            
+                await requstBack.save().then(t => t.populate('sending resiving', 'first_name last_name').execPopulate())            
 
                 //Update 
                 const upadt= await Requests.findOneAndUpdate({_id: req.params.requestId} , {$set: apartmentFileds}, {new: true}).populate('sending resiving', 'first_name last_name');
