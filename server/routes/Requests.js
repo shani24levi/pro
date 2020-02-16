@@ -1,8 +1,11 @@
 const express= require('express');
-var cors = require('cors');
 const requsts = express.Router();
-const control = require('../controller/Requests');
-const vertify = require('../config/verifyToken');
+const passport = require('passport');
+
+
+
+const vertify =  passport.authenticate('jwt', { session: false });
+const control = require('../controllers/Requests')
 
 //Most are praivte routs
 

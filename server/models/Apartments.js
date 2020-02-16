@@ -8,11 +8,12 @@ const ApartmentSchema = new Schema({
     requsts: [
         {reqId: {type: mongoose.Schema.Types.ObjectId, ref: 'Requests'}
     }],
-    //star: [{
-    //    user :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
-    //    value: {type:Number}
 
-    //}], //for ranc the apartment by user
+    star: [{
+        user :{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
+        value: {type:Number}
+
+    }], //for ranc the apartment by user
 
     city:{type:String},
     address :{type: String},
@@ -29,7 +30,9 @@ const ApartmentSchema = new Schema({
     loftSize: {type:Number},
     pats: {type: String, enum: ["notAllow", "allow", "onlyCats", "smallPats"] },
     date: { type: Date, default: Date.now},
-    //requst: [{ reqId: {type: mongoose.Schema.Types.ObjectId, ref: 'Requests'}}],
+
+    requst: [{ reqId: {type: mongoose.Schema.Types.ObjectId, ref: 'Requests'}}],
+    
     openHouse:{
         open:{type: Boolean}, 
         public: {type: Boolean},

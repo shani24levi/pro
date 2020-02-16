@@ -1,9 +1,9 @@
 const express= require('express');
-var cors = require('cors');
 const apartments = express.Router();
-const control = require('../controller/Apartments');
-const vertify = require('../config/verifyToken');
+const passport = require('passport');
 
+const vertify =  passport.authenticate('jwt', { session: false });
+const control = require('../controllers/Apartments')
 
 apartments.post('/',vertify, (req,res)=> { 
     control.craeteApartment(req,res);

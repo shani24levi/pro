@@ -1,28 +1,27 @@
-const express= require('express');
-const users = express.Router();
-const control = require('../controller/Users');
+const express = require('express');
+const router = express.Router();
+//const gravatar = require('gravatar');
+//const bcrypt = require('bcryptjs');
+//const jwt = require('jsonwebtoken');
+//const keys = require('../config/keys');
+const passport = require('passport');
 
+const vertify =  passport.authenticate('jwt', { session: false });
+const control = require('../controllers/Users')
 
-
-users.post('/register', (req,res) =>{
+router.post('/register', (req, res) => {
     control.registerUser(req,res);
-});
+  }
+);
 
-users.post('/login', (req,res)=> {
+router.post('/login', (req, res) => {
     control.loginUser(req,res);
-});
+  }
+);
 
-users.get('/logout/:email', (req,res)=> {
-    control.logoutUser(req,res);
-});
+router.get( '/current',vertify,(req, res) => {
+    control.currentUser(req,res);
+  }
+);
 
-users.get('/', (req,res)=> {
-    control.getAllUsers(req,res);
-});
-
-users.get('/:userId', (req,res)=> {
-    control.getUserById(req,res);
-});
-
-
-module.exports =users
+module.exports = router;

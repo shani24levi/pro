@@ -1,61 +1,52 @@
-var express=require('express');
-var bodyParser =require('body-parser');
-var app= express();
-var mongoose = require('mongoose');
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const path = require('path');
 const morgan = require('morgan');
-const session =require('express-session');
+
 const dotenv = require('dotenv');
 dotenv.config();
-
-var port = process.env.PORT || 5000;
+const app = express();
 
 //Middleware
-app.use(morgan('dev'));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended:false
-}));
-//middlware for otherzation from server to client: To privent cors() errors
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );  
-    next();
-})
+app.use(morgan('dev'));
 
 
 //Conect to DB
-const url= process.env.DB_CONECT;
-const options ={ useNewUrlParser: true, useCreateIndex: true}
+const dbConect = require('./dbConect');
+dbConect();
 
-mongoose 
-  .connect(url, options)
-  .then(()=> console.log("MongoDB connected"))
-  .catch(err => console.log(err))
 
+// Passport middleware
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 //Routs Middlewares
-var Users = require('./routes/Users');
-var Apartments = require('./routes/Apartments');
-var Requests = require('./routes/Requests');
-var Posts = require('./routes/Posts');
-var Profile =require('./routes/Profile');
-app.use('/users', Users);
-app.use('/profile', Profile);
-app.use('/apartments', Apartments);
-app.use('/requests', Requests);
-app.use('/posts', Posts);
+const Users = require('./routes/Users');
+const Apartments = require('./routes/Apartments');
+const Requests = require('./routes/Requests');
+const Posts = require('./routes/Posts');
+const Profile =require('./routes/Profile');
+app.use('/api/users', Users);
+app.use('/api/profile', Profile);
+app.use('/api/apartments', Apartments);
+app.use('/api/requests', Requests);
+app.use('/api/posts', Posts);
+
+// Server static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+const port = process.env.PORT || 5000;
 
 //Listening on port 
-app.listen(port, () => console.log('Server is running on port ', port));
-
-
-  /*Errors langh for this project : 
-  * 400 -  validation errors
-  * 401 - some thing went with data
-  * 402 - alrady exists
-  * 404 - not found
-  */
+app.listen(port, () => console.log(`Server running on port ${port}`));

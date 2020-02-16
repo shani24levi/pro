@@ -1,4 +1,4 @@
-const mongoose =require('mongoose');
+const mongoose = require('mongoose');
 const { Schema, model } = require('mongoose');
 
 const ProfileSchema = new Schema({
@@ -6,11 +6,12 @@ const ProfileSchema = new Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref:'Users'},
     apartmnts: [{ apartmnt: {type:mongoose.Schema.Types.ObjectId, ref:'Apartments'} }], //list of my apartmrnts Or list of my favorits
 
-    loction: {type: String},
+    handle: {type: String},
+    location: {type: String},
     status: { type: String  } ,
     disciption: { type: String } ,
-    
-    myReantals: [
+
+    myReantals: [ 
         {
             address: {type: String},
             city: {type: String},
@@ -35,8 +36,9 @@ const ProfileSchema = new Schema({
     },
     social: {
         twitter: {type: String},
-        faceboke: {type: String},
-        youtob: {type: String}
+        facebook: {type: String},
+        youtube: {type: String},
+
     }
 
 }, { collection: 'profiles' });
@@ -45,4 +47,3 @@ const ProfileSchema = new Schema({
 
 const Profiles = mongoose.model( 'Profiles' , ProfileSchema); 
 module.exports = Profiles;
-
