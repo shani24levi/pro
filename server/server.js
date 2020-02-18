@@ -33,7 +33,7 @@ const Profile =require('./routes/Profile');
 app.use('/api/users', Users);
 app.use('/api/profile', Profile);
 app.use('/api/apartments', Apartments);
-app.use('/api/requests', Requests);
+app.use('/api/requsts', Requests);
 app.use('/api/posts', Posts);
 
 // Server static assets if in production
@@ -45,6 +45,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
 
 const port = process.env.PORT || 5000;
 

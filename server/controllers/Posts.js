@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Post = require('../models/Post');
 const Profile = require('../models/Profile');
+const User = require('../models/Users');
 
 // Validation
 const validatePostInput = require('../validation/post');
@@ -77,17 +78,6 @@ async function deletePost(req, res) {
        if (String(post.user) !== String(req.user._id)) //make it to string only to make sure it same type
                return res.status(401).send({message: 'Not allowd. This user is not the owner of the post' });
        else
-           //Delete
-           //first  remove this post from user module post[]array
-           var postUser = await User.findOne({_id: req.user._id})
-           if (!postUser)
-               return res.status(404).send({message: 'User not found'});
-           else{
-               //remove user id from posts array
-               postUser.posts.unshift({ user: req.user._id });
-               await postUser.save();
-           }
-
            //Now Delet
            post.remove().then(()=> res.status(200).send({message: 'post remove sucssfuly '}) );    
     } catch (err) {
@@ -136,7 +126,7 @@ async function unlikePost(req, res) {
             return res.status(404).send({message: 'User not found' })
         
         //Chake this user allrady liked the post
-        const post = await Post.findById(req.params.postId)
+        const post = await Post.findById(req.params.id)
         if (!post)
             return res.status(404).send({message: 'Post not found'});
         if (post.likes.filter( like => String(like.user) == String(req.user._id) ).length  === 0 ) //equlle ziro meen the id user is not in the liks array
@@ -166,7 +156,7 @@ async function unlikePost(req, res) {
 async function commentPost (req, res) {
     try {
          //Chack if post exists
-         const post = await Post.findById(req.params.postId);
+         const post = await Post.findById(req.params.id);
          if (!post)
              return res.status(404).send({message: 'Post not found' })
          

@@ -87,13 +87,12 @@ class requstController {
 
     static async deleteOneRequsts(req,res){
         try{
-            const request = await Requests.findById(req.user._id);
+            const request = await Requests.findById({_id: req.params.requestId});
             if (!request) {
                 res.status(404).send({message: 'Request not found'});
             } else {
-                const remov= await Requests.remove({_id: req.user._id })
+                const remov= await Requests.findOneAndRemove({_id: req.params.requestId })
                 res.status(200).send({
-                    message: 'All users Request removed sucssfuly',
                     removed: remov
                 })
             }
@@ -106,14 +105,11 @@ class requstController {
 
     static async getAllRequsts(req,res){
         try{
-             const allRequsts = await Requests.find().populate('sending resiving apartmnt', 'first_name last_name address city');; //get the details owner    
+             const allRequsts = await Requests.find().populate('sending resiving apartmnt', 'first_name last_name address city avatar');; //get the details owner    
             if (!allRequsts) {
                 res.status(404).json({message: 'Requsts not found'});
             } else {
-                res.status(200).send({
-                    message: 'All Requests found',
-                    allRequsts: allRequsts
-                })
+                res.status(200).json(allRequsts)
             }
         }
         catch (err) {

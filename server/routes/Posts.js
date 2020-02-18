@@ -40,7 +40,7 @@ router.post('/unlike/:id',vertify,(req, res) => {
   }
 );
 
-router.post('/comment/:postId',vertify, (req, res) => {
+router.post('/comment/:id',vertify, (req, res) => {
   control.commentPost(req,res);
   }
 );

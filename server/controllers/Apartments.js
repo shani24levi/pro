@@ -227,10 +227,7 @@ class ApartmentController {
             if (!allApartments) { 
                 res.status(404).json("Apartments not found");
             } else {
-                res.status(200).json(allApartments).send({
-                    message: 'All Apartments',
-                    allApartments: allApartments
-                })
+                res.status(200).json(allApartments).json(allApartments)
             }
         }
         catch (err) {
