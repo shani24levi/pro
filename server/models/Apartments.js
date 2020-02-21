@@ -49,8 +49,8 @@ const ApartmentSchema = new Schema({
     }] ,//only when open is true.... user can sign thenself
 
     status: {type: String ,enum: ["available", "ocupied"]}, 
-    x: {type: String}, //this is for google maps - will be defind only in the view - client will chose dot on map
-    y: {type: String},
+    lat: {type: String}, //this is for google maps - will be defind only in the view - client will chose dot on map
+    lng: {type: String},
 
 }, { collection: 'aprtments' });
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import Apartments from './Apartments';
+import Markres from './Markres';
+
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Profile from '../profiles/Profiles';
 
 
 const mapStyles = {
@@ -12,52 +12,72 @@ const mapStyles = {
 };
 
 export class MapContainer extends Component {
+  constructor(props) {
+    super(props);
 
-  onSubmit(e) {
-    e.preventDefault();
-
-    const apartmentsData = {
-      handle: this.state.handle,
-      location: this.state.location,
-      status: this.state.status,
-      skills: this.state.skills,
-      disciption: this.state.disciption,
-      twitter: this.state.twitter,
-      facebook: this.state.facebook,
-      youtube: this.state.youtube
-    };
-
-    this.props.editeProfile(apartmentsData, this.props.history);
+    this.state = {
+      selected: '',
+    }
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+
+  onMarkerClick = (e) => {
+    console.log('e',e)
+    this.setState({
+      selected: e.name
+    })
   }
 
 
   render() {
 
+
+    const apartments = this.props.apartments || [];
+
+
     return (
       <div className="apartments">
-        <div style={{width:"50%", height:"90%", position: 'absolute'}}>
+        <div className="mapStyle">
           <Map
             google={this.props.google}
             zoom={10}
             style={mapStyles}
             initialCenter={{
-            lat:32.166313,
-            lng: 34.843311
+              lat: 32.166313,
+              lng: 34.843311
             }}
-          />
+          >
+            {apartments.map(app => {
+
+
+              if (!app.lat || !app.lng) return null;
+
+              return (<Marker
+                name={app._id}
+                position={{ lat: app.lat, lng: app.lng }}
+                onClick={this.onMarkerClick}
+              />)
+            })}
+          </Map>
         </div>
-        <div style={{float: "left", position: 'absolute'}}>
-          <Profile />
+        <div className="apartment">
+          <Apartments selected={this.state.selected} />
         </div>
       </div>
     );
   }
 }
- 
-export default GoogleApiWrapper({
-  apiKey: ("AIzaSyAC5auqilLpK4X5se3m2y8gaGjvw6MwJHs")
-})(MapContainer)
+
+const mapStateToProps = state => ({
+  apartments: state.apartment.apartments
+});
+
+
+
+
+
+export default connect(mapStateToProps)(
+  GoogleApiWrapper({
+    apiKey: ("AIzaSyAC5auqilLpK4X5se3m2y8gaGjvw6MwJHs")
+  })(MapContainer)
+)

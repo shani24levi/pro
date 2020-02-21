@@ -41,6 +41,8 @@ class ApartmentController {
                patsaftyChacks: req.body.saftyChack,
                desciption: req.body.desciption,
                loftSize: req.body.loftSize,
+               lat:req.body.lat,
+               lng:req.body.lng,
                created: today,
                openHouse : {
                    open : req.body.openHouse_open  
@@ -93,6 +95,9 @@ class ApartmentController {
             if(req.body.neebrhood) apartmentFileds.neebrhood=req.body.neebrhood;
             if(req.body.saftyChack) apartmentFileds.saftyChack=req.body.saftyChack;
             if(req.body.desciption) apartmentFileds.desciption=req.body.desciption;
+            
+            if(req.body.lat) apartmentFileds.lat=req.body.lat;
+            if(req.body.lng) apartmentFileds.lng=req.body.lng;
             
             if(req.body.rooms) apartmentFileds.rooms=req.body.rooms;
             if(req.body.loftSize) apartmentFileds.loftSize=req.body.loftSize;
@@ -227,7 +232,7 @@ class ApartmentController {
             if (!allApartments) { 
                 res.status(404).json("Apartments not found");
             } else {
-                res.status(200).json(allApartments).json(allApartments)
+                res.status(200).json(allApartments);
             }
         }
         catch (err) {

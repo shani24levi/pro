@@ -15,6 +15,9 @@ img {
   margin-bottom: -50px;
   height: 100vh;  
 }
+.small{
+  height: 70vh !important; 
+}
 
 .navLogo {
   width: 30%;
@@ -23,6 +26,28 @@ img {
 
 .landing-inner {
   padding-top: 80px;
+}
+.apartment{
+  margin-left:50%;
+}
+.mapStyle{
+  width: 40%;
+  height: 90%;
+  position: absolute;
+}
+
+.apartments-container {
+  overflow-y: scroll;
+  height: 700px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: gray; 
 }
 
 .dark-overlay {
@@ -189,7 +214,7 @@ footer {
    margin-left:10rem
   }
   .tracking-item .tracking-date {
-   position:absolute;
+   /* position:absolute; */
    left:-10rem;
    width:7.5rem;
    text-align:right
@@ -201,4 +226,20 @@ footer {
    padding:0;
    background-color:transparent
   }
+ }
+
+ @media(max-width:570px) {
+ .apartment{
+   margin-left: 0%;
+   margin-top: 47%;  
+   width: 100%;
+   position: absolute;
+
+ }
+ .mapStyle{
+  width: 95%;
+  height: 30%;
+  position: absolute;
+
+ }
  }

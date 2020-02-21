@@ -3,26 +3,36 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
 import ApartmentItem from './ApartmentItem';
-import { getApartents } from '../../actions/apartmentsActions';
+import { getApartents  } from '../../actions/apartmentsActions';
+import '../../App.css'
 
 class Apartments extends Component {
   componentDidMount() {
-    this.props.getApartents();
+    this.props.getApartents ();
   }
 
   render() {
-    const { apartments, loading } = this.props.apartment;
-    let apartmentItems;
+
+    console.log('this',this.props.selected)
+    let { apartments, loading } = this.props.apartment;
+    let profileItems;
 
     if (apartments === null || loading) {
-        apartmentItems = <Spinner />;
+      profileItems = <Spinner />;
     } else {
       if (apartments.length > 0) {
-        apartmentItems = apartments.map(apartment => (
+
+        if(this.props.selected){
+          // sort by selected item
+          apartments = apartments.sort((a,b) => {
+            return a._id == this.props.selected ? -1 : 1;
+          })
+        }
+        profileItems = apartments.map(apartment => (
           <ApartmentItem key={apartment._id} apartment={apartment} />
         ));
       } else {
-        apartmentItems = <h4>No apartments found...</h4>;
+        profileItems = <h4>No profiles found...</h4>;
       }
     }
 
@@ -30,9 +40,16 @@ class Apartments extends Component {
       <div className="apartments">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
-              {apartmentItems}
+          <div className="col-md-12">
+            <div className="tracking">
+                <div className="text-center tracking-status-intransit">
+                    <p className="tracking-status text-tight">Apartments</p>
+                </div>
             </div>
+            <div className="apartments-container">
+              {profileItems}
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -40,13 +57,13 @@ class Apartments extends Component {
   }
 }
 
-Apartments.propTypes = {
-  getApartents: PropTypes.func.isRequired,
+getApartents.propTypes = {
+  getRequstes: PropTypes.func.isRequired,
   apartment: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    apartment: state.apartment
+  apartment: state.apartment
 });
 
-export default connect(mapStateToProps, { getApartents })(Apartments);
+export default connect(mapStateToProps, { getApartents  })(Apartments);

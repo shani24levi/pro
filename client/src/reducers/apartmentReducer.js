@@ -6,7 +6,7 @@ import {
   
   const initialState = {
     apartment: null,
-    amartments: null,
+    apartments: null,
     loading: false
   };
   
@@ -26,7 +26,7 @@ import {
       case GET_APARTMENTS:
         return {
           ...state,
-          amartments: action.payload,
+          apartments: action.payload,
           loading: false
         };
       default:

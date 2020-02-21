@@ -15,18 +15,13 @@ class CreateProfile extends Component {
       displaySocialInputs: false,
       displayAboutMeInputs: false,
       handle: '',
-      company: '',
-      website: '',
       location: '',
       status: '',
-      skills: '',
-      githubusername: '',
-      bio: '',
+      disciption: '',
       twitter: '',
       facebook: '',
-      linkedin: '',
       youtube: '',
-      instagram: '',
+      job: '',
       errors: {}
     };
 
@@ -47,12 +42,11 @@ class CreateProfile extends Component {
       handle: this.state.handle,
       location: this.state.location,
       status: this.state.status,
-      skills: this.state.skills,
-      githubusername: this.state.githubusername,
       disciption: this.state.disciption,
       twitter: this.state.twitter,
       facebook: this.state.facebook,
       youtube: this.state.youtube,
+      job: this.state.job
     };
 
     this.props.createProfile(profileData, this.props.history);
@@ -176,13 +170,11 @@ class CreateProfile extends Component {
     // Select options for status
     const options = [
       { label: '* Select Professional Status', value: 0 },
-      { label: 'Developer', value: 'Developer' },
-      { label: 'Junior Developer', value: 'Junior Developer' },
-      { label: 'Senior Developer', value: 'Senior Developer' },
+      { label: 'Single', value: 'Single' },
+      { label: 'Married', value: 'Married' },
+      { label: 'divorced', value: 'divorced' },
       { label: 'Manager', value: 'Manager' },
-      { label: 'Student or Learning', value: 'Student or Learning' },
-      { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
-      { label: 'Intern', value: 'Intern' },
+      { label: 'complex', value: 'complex' },
       { label: 'Other', value: 'Other' }
     ];
 
@@ -223,21 +215,11 @@ class CreateProfile extends Component {
                 />
  
                 <TextFieldGroup
-                  placeholder="* Skills"
-                  name="skills"
-                  value={this.state.skills}
-                  onChange={this.onChange}
-                  error={errors.skills}
-                  info="Please use comma separated values (eg.
-                    HTML,CSS,JavaScript,PHP"
-                />
-                <TextFieldGroup
-                  placeholder="Github Username"
+                  placeholder="Work Place"
                   name="githubusername"
-                  value={this.state.githubusername}
+                  value={this.state.job}
                   onChange={this.onChange}
-                  error={errors.githubusername}
-                  info="If you want your latest repos and a Github link, include your username"
+                  error={errors.job}
                 />
                 <TextAreaFieldGroup
                   placeholder="disciption"

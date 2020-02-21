@@ -28,7 +28,7 @@ apartments.delete('/:apartmentId', (req,res)=>{
     control.deleteApartment(req,res);
 });
 
-apartments.get('/', (req,res) =>{ 
+apartments.get('/all', (req,res) =>{ 
     control.getAllApartments(req,res);
 });
 

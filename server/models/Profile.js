@@ -10,6 +10,7 @@ const ProfileSchema = new Schema({
     location: {type: String},
     status: { type: String  } ,
     disciption: { type: String } ,
+    job:  { type: String } ,
 
     myReantals: [ 
         {

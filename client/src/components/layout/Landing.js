@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import'../../App.css'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Button , ButtonToolbar} from 'react-bootstrap';
+import SearchBar from './SearchBar';
 
 
 class Landing extends Component {
+  constructor(props){
+    super(props);
+    this.state= { addModalShow:false}
+  }
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/dashboard');
@@ -14,6 +19,7 @@ class Landing extends Component {
   }
 
   render() {
+    let addModalClose =()=> this.setState({addModalShow:false});
     return (
       <div className="landing">
         <div className="dark-overlay landing-inner text-light">
@@ -26,13 +32,15 @@ class Landing extends Component {
                   Create a WelcomeHome profile, share posts and get help
                   from other users for shearching your home
                 </p>
-                <hr />
                 <Link to="/register" className="btn btn-lg btn-info mr-2 orangBut">
                   Sign Up
                 </Link>
                 <Link to="/login" className="btn btn-lg btn-light">
                   Login
                 </Link>
+                
+                {/* <SearchBar/> */}
+
               </div>
             </div>
           </div>

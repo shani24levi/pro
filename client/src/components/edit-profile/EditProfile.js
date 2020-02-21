@@ -17,11 +17,11 @@ class EditeProfile extends Component {
       handle: '',
       location: '',
       status: '',
-      skills: '',
       disciption: '',
       twitter: '',
       facebook: '',
       youtube: '',
+      job: '',
       errors: {}
     };
 
@@ -41,37 +41,16 @@ class EditeProfile extends Component {
     if (nextProps.profile.profile) {
       const profile = nextProps.profile.profile;
 
-      // Bring skills array back to CSV
-      //const skillsCSV = profile.skills.join(',');
-
-      // If profile field doesnt exist, make empty string
-      //profile.location = !isEmpty(profile.location) ? profile.location : '';
-
-      
-   
-      //profile.bio = !isEmpty(profile.bio) ? profile.bio : '';
-      //profile.social = !isEmpty(profile.social) ? profile.social : {};
-      //profile.twitter = !isEmpty(profile.social.twitter)
-      //  ? profile.social.twitter
-      //  : '';
-      //profile.facebook = !isEmpty(profile.social.facebook)
-       // ? profile.social.facebook
-       // : '';
-      //profile.youtube = !isEmpty(profile.social.youtube)
-      //  ? profile.social.youtube
-      //  : '';
- 
-
       // Set component fields state
       this.setState({
         handle: profile.handle,
         location: profile.location,
         status: profile.status,
-        //skills: skillsCSV,
         disciption: profile.disciption,
         twitter: profile.twitter,
         facebook: profile.facebook,
         youtube: profile.youtube,
+        job: profile.job
       });
     }
   }
@@ -83,11 +62,12 @@ class EditeProfile extends Component {
       handle: this.state.handle,
       location: this.state.location,
       status: this.state.status,
-      skills: this.state.skills,
       disciption: this.state.disciption,
       twitter: this.state.twitter,
       facebook: this.state.facebook,
-      youtube: this.state.youtube
+      youtube: this.state.youtube,
+      job: this.state.job
+
     };
 
     this.props.editeProfile(profileData, this.props.history);
@@ -138,13 +118,11 @@ class EditeProfile extends Component {
     // Select options for status
     const options = [
       { label: '* Select Professional Status', value: 0 },
-      { label: 'Developer', value: 'Developer' },
-      { label: 'Junior Developer', value: 'Junior Developer' },
-      { label: 'Senior Developer', value: 'Senior Developer' },
+      { label: 'Single', value: 'Single' },
+      { label: 'Married', value: 'Married' },
+      { label: 'divorced', value: 'divorced' },
       { label: 'Manager', value: 'Manager' },
-      { label: 'Student or Learning', value: 'Student or Learning' },
-      { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
-      { label: 'Intern', value: 'Intern' },
+      { label: 'complex', value: 'complex' },
       { label: 'Other', value: 'Other' }
     ];
 
@@ -174,7 +152,6 @@ class EditeProfile extends Component {
                   onChange={this.onChange}
                   options={options}
                   error={errors.status}
-                  info="Give us an idea of where you are at in your career"
                 />
                 <TextFieldGroup
                   placeholder="Location"
@@ -182,23 +159,14 @@ class EditeProfile extends Component {
                   value={this.state.location}
                   onChange={this.onChange}
                   error={errors.location}
-                  info="City or city & state suggested (eg. Boston, MA)"
+                  info="City or city & state suggested"
                 />
                 <TextFieldGroup
-                  placeholder="* Skills"
-                  name="skills"
-                  value={this.state.skills}
+                  placeholder="Work Place"
+                  name="job"
+                  value={this.state.job}
                   onChange={this.onChange}
-                  error={errors.skills}
-                
-                />
-                <TextFieldGroup
-                  placeholder="Github Username"
-                  name="githubusername"
-                  value={this.state.githubusername}
-                  onChange={this.onChange}
-                  error={errors.githubusername}
-                  info="If you want your latest repos and a Github link, include your username"
+                  error={errors.job}
                 />
                 <TextAreaFieldGroup
                   placeholder="Short Bio"
