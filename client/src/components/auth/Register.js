@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
+import SelectListGroup from '../common/SelectListGroup';
 
 class Register extends Component {
   constructor() {
@@ -52,6 +53,12 @@ class Register extends Component {
 
   render() {
     const { errors } = this.state;
+
+    const options = [
+      { label: 'Select Purpose', value: 0 },
+      { label: 'Landlord', value: 'owner', value: 'owner'  },
+      { label: 'Searcher', value: 'user', value: 'user'  },
+    ];
 
     return (
       <div className="register">
@@ -102,6 +109,15 @@ class Register extends Component {
                   onChange={this.onChange}
                   error={errors.password2}
                 />
+                <SelectListGroup
+                  placeholder="Shearcher or Landlod"
+                  name="role"
+                  value={this.state.role}
+                  onChange={this.onChange}
+                  options={options}
+                  error={errors.role}
+                />
+{/* 
                 <TextFieldGroup
                   placeholder="shearcher or landlod"
                   name="role"
@@ -109,7 +125,7 @@ class Register extends Component {
                   value={this.state.role}
                   onChange={this.onChange}
                   error={errors.role}
-                />
+                /> */}
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>

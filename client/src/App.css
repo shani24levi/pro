@@ -1,6 +1,4 @@
-body {
-  margin-bottom: 100px !important;
-}
+
 
 img {
   width: 100%;
@@ -27,18 +25,10 @@ img {
 .landing-inner {
   padding-top: 80px;
 }
-.apartment{
-  margin-left:50%;
-}
-.mapStyle{
-  width: 40%;
-  height: 90%;
-  position: absolute;
-}
 
 .apartments-container {
   overflow-y: scroll;
-  height: 700px;
+  height: 450px;
 }
 
 ::-webkit-scrollbar {
@@ -72,12 +62,7 @@ img {
   color: #bbb !important;
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
+
 
 .orangBut{
   background: linear-gradient(99.42deg, #F8A170 14.73%, #FFCD61 97.52%);
@@ -91,6 +76,9 @@ footer {
   border-radius: 10px;
   border-color: #FFCD61 !important;
 }
+
+
+
 
 
 
@@ -199,10 +187,10 @@ footer {
   background-color:#b789c7
  }
  .tracking-item .tracking-icon.status-exception {
-  background-color:#d26759
+  background-color: linear-gradient(95.93deg, rgba(255, 199, 167, 0.2) 14.73%, rgba(255, 213, 121, 0.2) 97.52%);
  }
  .tracking-item .tracking-icon.status-inforeceived {
-  background-color:#214977
+  background-color : linear-gradient(95.93deg, rgba(255, 199, 167, 0.2) 14.73%, rgba(255, 213, 121, 0.2) 97.52%);
  }
  .tracking-item .tracking-icon.status-intransit {
   color:#e5e5e5;
@@ -226,20 +214,4 @@ footer {
    padding:0;
    background-color:transparent
   }
- }
-
- @media(max-width:570px) {
- .apartment{
-   margin-left: 0%;
-   margin-top: 47%;  
-   width: 100%;
-   position: absolute;
-
- }
- .mapStyle{
-  width: 95%;
-  height: 30%;
-  position: absolute;
-
- }
  }

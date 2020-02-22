@@ -1,0 +1,29 @@
+/* style for googleMap componanta */
+
+.apartment{
+    margin-left:50%;
+}
+
+.mapStyle{
+    width: 40%;
+    height: 90%;
+    position: absolute;
+}
+
+
+
+@media(max-width:570px) {
+    .apartment{
+      margin-left: 0%;
+      margin-top: 47%;  
+      width: 100%;
+      position: absolute;
+   
+    }
+    .mapStyle{
+     width: 95%;
+     height: 45%;
+     position: absolute;
+   
+    }
+}

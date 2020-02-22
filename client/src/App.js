@@ -16,10 +16,10 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
-import CreateProfile from './components/create-profile/CreateProfile';
-import EditProfile from './components/edit-profile/EditProfile';
-import AddExperience from './components/add-credentials/AddExperience';
-import AddEducation from './components/add-credentials/AddEducation';
+import CreateProfile from './components/create-componnets/CreateProfile';
+import EditProfile from './components/edit-componnets/EditProfile';
+import AddExperience from './components/add-credentials/MyRentals';
+import AddEducation from './components/add-credentials/AddApartmentPage1';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
@@ -28,6 +28,8 @@ import NotFound from './components/not-found/NotFound';
 import MapContainer from './components/googleMaps/GoogleMap';
 import Apartment from './components/googleMaps/Apartments';
 import Requestes from './components/requsrt/Requsts';
+import AddApartment from './components/add-credentials/AddApartment';
+import EditApartment from './components/edit-componnets/EditApartment';
 
 
 import './App.css';
@@ -62,7 +64,7 @@ class App extends Component {
             <Navbar />
             <Route exact path="/" component={Landing} />
             <Switch>
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
             <div className="container">
               <Route exact path="/req" component={Requestes} />
@@ -72,7 +74,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/profiles" component={Profiles} />
               <Route exact path="/profile/:handle" component={Profile} />
-             
+
               <Switch>
                 <PrivateRoute
                   exact
@@ -90,7 +92,7 @@ class App extends Component {
               <Switch>
                 <PrivateRoute
                   exact
-                  path="/add-experience"
+                  path="/add-myRantal"
                   component={AddExperience}
                 />
               </Switch>
@@ -107,6 +109,20 @@ class App extends Component {
               <Switch>
                 <PrivateRoute exact path="/post/:id" component={Post} />
               </Switch>
+
+              <Switch>
+                <PrivateRoute exact path="/add-apartment" component={AddApartment} />
+              </Switch>
+
+
+              <Switch>
+                <PrivateRoute  path="/edit-apartment/:id" component= {EditApartment} />
+                  {/* {props => {
+                  console.log('prop', props);
+                  return 'fds';
+                }} /> */}
+              </Switch>
+
               <Route exact path="/not-found" component={NotFound} />
             </div>
             <Footer />

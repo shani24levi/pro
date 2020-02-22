@@ -2,10 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from './registerServiceWorker'
+
+
+
+// clear window state
+
+if (window.history.state) {
+    window.history.state.state = null;
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
+
 
 
 // const arr =  [

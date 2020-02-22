@@ -39,7 +39,7 @@ class Landing extends Component {
                   Login
                 </Link>
                 
-                {/* <SearchBar/> */}
+                <SearchBar/>
 
               </div>
             </div>

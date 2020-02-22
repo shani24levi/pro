@@ -6,7 +6,8 @@ import { getCurrentProfile, deleteAccount } from '../../actions/profileActions';
 import Spinner from '../common/Spinner';
 import ProfileActions from './ProfileActions';
 import MyRentals from './MyRental';
-import Experience from './MyRental';
+import ApartmentsOwner from './ApartmentsOwner';
+import SearchBar from '../layout/SearchBar';
 
 
 class Dashboard extends Component {
@@ -21,6 +22,8 @@ class Dashboard extends Component {
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
+    console.log(user.role);
+
 
     let dashboardContent;
 
@@ -65,8 +68,32 @@ class Dashboard extends Component {
 
 
     return (
+    
       <div className="both">
-        <div className="landing small">
+        {user.role == 'user' ?  //if the user is searcher :
+            <div className="landing small">
+            <div className="dark-overlay landing-inner text-light small">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-12 text-center">
+                    <h1 className="display-3 mb-4">Find Your New Home</h1>
+                    <SearchBar/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>        
+        :
+        //if user is owner so show his apartments: 
+        <div className="apartment-owner-show">
+          <ApartmentsOwner /> 
+          <Link to="/add-apartment" className="btn btn-lg btn-info">
+              Add New Apartment
+            </Link>
+        </div>
+        }
+
+        {/* <div className="landing small">
           <div className="dark-overlay landing-inner text-light small">
             <div className="container">
               <div className="row">
@@ -74,11 +101,11 @@ class Dashboard extends Component {
                   <h1 className="display-3 mb-4">Find Your New Home</h1>
                   {/* {true ? 'ok' :  'no'}
                   {yser.role  == 'x' && 'ok2'} */}
-                </div>
+                {/* </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
               
       <div className="dashboard" style={{marginTop: '9%'}}>
         <div className="container">

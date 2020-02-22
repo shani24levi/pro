@@ -5,6 +5,11 @@ const passport = require('passport');
 const vertify =  passport.authenticate('jwt', { session: false });
 const control = require('../controllers/Apartments')
 
+apartments.get('/', vertify , (req, res) => {
+    control.getCurrentApartment(req,res);
+  }
+);
+
 apartments.post('/',vertify, (req,res)=> { 
     control.craeteApartment(req,res);
 });
@@ -38,6 +43,10 @@ apartments.get('/:apartmentId', (req,res)=> { //BY APARTMENT ID
 
 apartments.get('/user/:userId', (req,res)=> { 
     control.getApartmentByuser(req,res);
+});
+
+apartments.get('/user', vertify,  (req,res)=> { 
+    control.getApartmentByuserLogdIn(req,res);
 });
 
 

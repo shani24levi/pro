@@ -19,13 +19,12 @@ const Requests= require('../models/Requests');
 
 
 
-
 async function getCurrentUser(req, res) {
     try {
         const errors = {};
 
         Profile.findOne({ user: req.user.id })
-          .populate('user', ['first_name', 'last_name', 'avatar'])
+          .populate('user', ['first_name', 'last_name', 'avatar', 'role'])
           .then(profile => {
             if (!profile) {
               errors.noprofile = 'There is no profile for this user';
@@ -47,7 +46,7 @@ async function getAll(req, res) {
         const errors = {};
 
         Profile.find()
-          .populate('user', ['first_name', 'last_name', 'avatar'])
+          .populate('user', ['first_name', 'last_name', 'avatar' ,'role'])
           .then(profiles => {
             if (!profiles) {
               errors.noprofile = 'There are no profiles';
@@ -93,7 +92,7 @@ async function getByUserId(req, res) {
         const errors = {};
 
         Profile.findOne({ user: req.params.user_id })
-          .populate('user', ['name', 'avatar' ,'role'])
+          .populate('user', ['fiest_name','last_name', 'avatar' ,'role'])
           .then(profile => {
             if (!profile) {
               errors.noprofile = 'There is no profile for this user';

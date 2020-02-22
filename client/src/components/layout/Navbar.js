@@ -7,6 +7,12 @@ import { clearCurrentProfile } from '../../actions/profileActions';
 import'../../App.css'
 import logo from '../../img/logo.svg';
 
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp'; 
+import EmailSharpIcon from '@material-ui/icons/EmailSharp';
+import NotificationsSharpIcon from '@material-ui/icons/NotificationsSharp';
+import SearchSharpIcon from '@material-ui/icons/SearchSharp';
+import HomeIcon from '@material-ui/icons/Home';
 
 class Navbar extends Component {
   onLogoutClick(e) {
@@ -22,17 +28,17 @@ class Navbar extends Component {
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
           <Link className="nav-link" to="/search">
-            search
+          <SearchSharpIcon className="iconColor"/>{' '} Search 
           </Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/feed">
-            Post Feed
+          <NotificationsSharpIcon className="iconColor" />  Post Feed
           </Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">
-            Dashboard
+            <HomeIcon className="iconColor" /> Home
           </Link>
         </li>
         <li className="nav-item">
@@ -72,7 +78,7 @@ class Navbar extends Component {
     return (
       <nav className="navbar navbar-expand-sm navbar-light bg-white mb-4">
         <div className="container">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand logoNav" to="/">
             WelcomeHome
             {/*<img className="img-responsive navLogo" src={logo} alt="logo"/>*/}
           </Link>
@@ -90,7 +96,7 @@ class Navbar extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/profiles">
                   {' '}
-                  Most viewed
+                  <FavoriteIcon className="iconColor"/> Most viewed
                 </Link>
               </li>
             </ul>

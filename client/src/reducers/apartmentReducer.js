@@ -6,7 +6,7 @@ import {
   
   const initialState = {
     apartment: null,
-    apartments: null,
+    apartments: [],
     loading: false
   };
   
@@ -24,6 +24,7 @@ import {
           loading: false
         };
       case GET_APARTMENTS:
+        console.log('action',action)
         return {
           ...state,
           apartments: action.payload,

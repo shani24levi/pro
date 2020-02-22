@@ -35,7 +35,8 @@ async function loginUser(req, res) {
           bcrypt.compare(password, user.password).then(isMatch => {
             if (isMatch) {
               // User Matched
-              const payload = { id: user.id,  first_name: user.first_name,  last_name: user.last_name,  avatar: user.avatar }; // Create JWT Payload
+              
+              const payload = { id: user.id,  first_name: user.first_name,  last_name: user.last_name,  avatar: user.avatar, role: user.role }; // Create JWT Payload
       
               // Sign Token
               jwt.sign(

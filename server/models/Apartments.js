@@ -24,7 +24,8 @@ const ApartmentSchema = new Schema({
     parcking: {type:String},
     neebrhood: {type:String }, 
     saftyChack: {type:Number},
-    picturs: { type: Date, default: Date.now},
+    mainImg: { type:String},
+    picturs: [{ type:String}],
     desciption: {type:String},
     rooms: {type:Number},
     loftSize: {type:Number},
@@ -36,7 +37,7 @@ const ApartmentSchema = new Schema({
     openHouse:{
         open:{type: Boolean}, 
         public: {type: Boolean},
-        date: {type: String},
+        dateOpenHuose: {type: Date},
         houre: {type: String},
     }, 
     openANDpublic: {type: Boolean ,default: false}, //need it for the search matode becose cant find inner object in find({})
