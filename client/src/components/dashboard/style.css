@@ -19,6 +19,10 @@
     width: 100%;
 }
 
+.imgStyle{
+    border-radius: 25px 25px 0px 0px;
+}
+
 .col-item .info
 {
     padding: 10px;
@@ -111,3 +115,14 @@
 {
     margin-right: 10px;
 }
+
+/* .potoSeting{
+    box-sizing: border-box;
+}
+
+@media(max-width:570px) {
+    .potoSeting{
+        box-sizing: content-box;
+    }
+
+} */

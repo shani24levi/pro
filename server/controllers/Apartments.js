@@ -30,81 +30,175 @@ async function getCurrentApartment(req, res) {
 }
 
 
-class ApartmentController {
+async function craeteApartment(req, res) {
+    try {
+        const { errors, isValid } = validatMyApartment(req.body);
 
+        // // Check Validation
+        // if (!isValid) {
+        //     // Return any errors with 400 status
+        //     return res.status(400).json(errors);
+        // }
 
-    static async craeteApartment(req, res) {
-        try {
-            const { errors, isValid } = validatMyApartment(req.body);
+        //chacking if the apartment is alrdy in the DB
+        const apartmentExist = await Apartment.findOne({ address: req.body.address, apartmentNum: req.body.apartmentNum });
+        if (apartmentExist)
+            return res.status(402).send({ message: 'Apartment allrady exists' });
 
-            // Check Validation
-            if (!isValid) {
-                // Return any errors with 400 status
-                return res.status(400).json(errors);
+        //create a new user
+        const today = new Date()
+        let apartmntData = new Apartment({
+            _id: new mongoose.Types.ObjectId(),
+            city: req.body.city,
+            address: req.body.address,
+            apartmentNum: req.body.apartmentNum,
+            price: req.body.price,
+            rooms: req.body.rooms,
+            owner: req.user._id,
+            status: req.body.status,
+            pats: req.body.pats,
+            parcking: req.body.parcking,
+            neebrhood: req.body.neebrhood,
+            patsaftyChacks: req.body.saftyChack,
+            desciption: req.body.desciption,
+            loftSize: req.body.loftSize,
+            lat: req.body.lat,
+            lng: req.body.lng,
+            created: today,
+            openHouse: {
+                open: req.body.openHouse_open
             }
+        });
+        if (apartmntData) {
+            //save in apartment colection
+            const saveApartment = await apartmntData.save().then(t => t.populate('owner', 'first_name last_name email').execPopulate())
 
-            //chacking if the apartment is alrdy in the DB
-            const apartmentExist = await Apartment.findOne({ address: req.body.address, apartmentNum: req.body.apartmentNum });
-            if (apartmentExist)
-                return res.status(402).send({ message: 'Apartment allrady exists' });
+            //save the apartment in profile colction
+            Profile.findOne({ user: req.user._id }).then(profile => {
+                //add to array in profile 
+                const newRent = {
+                    apartmnt: apartmntData._id,
 
-            //create a new user
-            const today = new Date()
-            let apartmntData = new Apartment({
-                _id: new mongoose.Types.ObjectId(),
-                city: req.body.city,
-                address: req.body.address,
-                apartmentNum: req.body.apartmentNum,
-                price: req.body.price,
-                rooms: req.body.rooms,
-                owner: req.user._id,
-                status: req.body.status,
-                pats: req.body.pats,
-                parcking: req.body.parcking,
-                neebrhood: req.body.neebrhood,
-                patsaftyChacks: req.body.saftyChack,
-                desciption: req.body.desciption,
-                loftSize: req.body.loftSize,
-                lat: req.body.lat,
-                lng: req.body.lng,
-                created: today,
-                openHouse: {
-                    open: req.body.openHouse_open
-                }
+                };
+
+                profile.apartmnts.unshift(newRent); //this is like push to start
+                profile.save();
             });
-            if (apartmntData) {
-                //save in apartment colection
-                const saveApartment = await apartmntData.save().then(t => t.populate('owner', 'first_name last_name email').execPopulate())
 
-                //save the apartment in profile colction
-                Profile.findOne({ user: req.user._id }).then(profile => {
-                    //add to array in profile 
-                    const newRent = {
-                        apartmnt: apartmntData._id,
+            res.status(200).send({
+                message: 'Apartment created',
+                apartment: saveApartment
+            });
 
-                    };
-
-                    profile.apartmnts.unshift(newRent); //this is like push to start
-                    profile.save();
-                });
-
-                res.status(200).send({
-                    message: 'Apartment created',
-                    apartment: saveApartment
-                });
-
-            }
         }
-        catch (err) {
-            console.error('some error occurred', err)
-            res.status(500).send(err.message);
-        };
     }
+    catch (err) {
+        console.error('some error occurred', err)
+        res.status(500).send(err.message);
+    };
+}
+
+
+    //by apartment id
+    // async function getApartmentsById(req, res) {
+    //     try {
+    //         const apartments = await Apartment.findById(req.params.apartmentId).populate('requsts user', 'purpose'); //get the details owner  
+
+    //         if (!apartments)
+    //             return res.status(404).send({
+    //                 message: 'Aartment not found by the id',
+    //             })
+    //         if (apartments == 0) //desnt work dont know why... retuns null.
+    //             return res.status(404).send({
+    //                 message: 'Aartments not found',
+    //             })
+
+    //         else return res.status(200).send({
+    //             message: 'Aartments found sucssfuly',
+    //             apartments: apartments
+    //         }).populate('usersCamming user usersCamming.user', 'first_name last_name email')
+    //     } catch (err) {
+    //         console.error('some error occurred', err)
+    //         res.status(500).send(err.message);
+    //     };
+    // }
+
+
+
+
+    //  async function craeteApartment(req, res) {
+    //     try {
+    //         const { errors, isValid } = validatMyApartment(req.body);
+
+    //         // Check Validation
+    //         if (!isValid) {
+    //             // Return any errors with 400 status
+    //             return res.status(400).json(errors);
+    //         }
+
+    //         //chacking if the apartment is alrdy in the DB
+    //         const apartmentExist = await Apartment.findOne({ address: req.body.address, apartmentNum: req.body.apartmentNum });
+    //         if (apartmentExist)
+    //             return res.status(402).send({ message: 'Apartment allrady exists' });
+
+    //         //create a new user
+    //         const today = new Date()
+    //         let apartmntData = new Apartment({
+    //             _id: new mongoose.Types.ObjectId(),
+    //             city: req.body.city,
+    //             address: req.body.address,
+    //             apartmentNum: req.body.apartmentNum,
+    //             price: req.body.price,
+    //             rooms: req.body.rooms,
+    //             owner: req.user._id,
+    //             status: req.body.status,
+    //             pats: req.body.pats,
+    //             parcking: req.body.parcking,
+    //             neebrhood: req.body.neebrhood,
+    //             patsaftyChacks: req.body.saftyChack,
+    //             desciption: req.body.desciption,
+    //             loftSize: req.body.loftSize,
+    //             lat: req.body.lat,
+    //             lng: req.body.lng,
+    //             created: today,
+    //             openHouse: {
+    //                 open: req.body.openHouse_open
+    //             }
+    //         });
+    //         if (apartmntData) {
+    //             //save in apartment colection
+    //             const saveApartment = await apartmntData.save().then(t => t.populate('owner', 'first_name last_name email').execPopulate())
+
+    //             //save the apartment in profile colction
+    //             Profile.findOne({ user: req.user._id }).then(profile => {
+    //                 //add to array in profile 
+    //                 const newRent = {
+    //                     apartmnt: apartmntData._id,
+
+    //                 };
+
+    //                 profile.apartmnts.unshift(newRent); //this is like push to start
+    //                 profile.save();
+    //             });
+
+    //             res.status(200).send({
+    //                 message: 'Apartment created',
+    //                 apartment: saveApartment
+    //             });
+
+    //         }
+    //     }
+    //     catch (err) {
+    //         console.error('some error occurred', err)
+    //         res.status(500).send(err.message);
+    //     };
+    // }
 
 
 
     //update without arrays:
-    static async editeApartment2(req, res) {
+   
+     async function editeApartment2(req, res) {
         try {
             //Udete     
             //Do it in if stats becouse i dont want to require fildes. if it cames from user so i set it. 
@@ -163,7 +257,7 @@ class ApartmentController {
         }
     }
 
-    static async invated(req, res) {
+     async function invated(req, res) {
         try {
             const currUser = await User.findOne({ _id: req.user._id });
             if (!currUser)
@@ -198,7 +292,7 @@ class ApartmentController {
     }
 
 
-    static async comming(req, res) {
+     async function comming(req, res) {
         try {
             const currUser = await User.findById({ _id: req.user._id })
             if (!currUser)
@@ -232,7 +326,7 @@ class ApartmentController {
     }
 
 
-    static async deleteApartment(req, res) {
+     async function deleteApartment(req, res) {
         try {
             const apartment = await Apartment.findById(req.params.apartmentId);
             if (!apartment) {
@@ -251,7 +345,7 @@ class ApartmentController {
         };
     }
 
-    static async getAllApartments(req, res) {
+     async function getAllApartments(req, res) {
         try {
             const allApartments = await Apartment.find().populate('owner', 'first_name last_name email apartmnts requests posts _id'); //get the details owner    
             if (!allApartments) {
@@ -266,8 +360,8 @@ class ApartmentController {
         };
     }
 
-    //by apartment id
-    static async getApartmentsById(req, res) {
+    // //by apartment id
+     async function getApartmentsById(req, res) {
         try {
             const apartments = await Apartment.findById(req.params.apartmentId).populate('requsts user', 'purpose'); //get the details owner  
 
@@ -290,7 +384,7 @@ class ApartmentController {
         };
     }
 
-    static async getApartmentByuser(req, res) {
+     async function getApartmentByuser(req, res) {
         try {
             const userid = req.params.userId;
             const apartments = await Apartment.find({ owner: req.params.userId }).populate('owner', 'first_name last_name email'); //get the details owner  
@@ -314,7 +408,7 @@ class ApartmentController {
     }
 
     //no good
-    static async getApartmentByuserLogdIn(req, res) {
+     async function getApartmentByuserLogdIn(req, res) {
         try {
             const apartments = await Apartment.find({ owner: req.user._id }).populate('owner', 'first_name last_name email'); //get the details owner  
 
@@ -336,7 +430,7 @@ class ApartmentController {
 
 
 
-    static async search(req, res) {
+     async function search(req, res) {
         try {
             console.log("search", req.body)
             const searchFilds = {};
@@ -372,10 +466,16 @@ class ApartmentController {
     }
 
 
-}
-
-
-module.exports = ApartmentController;
 module.exports = {
-    getCurrentApartment
+    getCurrentApartment,
+    craeteApartment,
+    editeApartment2,
+    invated,
+    comming,
+    deleteApartment,
+    getAllApartments,
+    getApartmentsById,
+    getApartmentByuser,
+    getApartmentByuserLogdIn,
+    search,
 };

@@ -5,6 +5,7 @@ import {
   GET_PROFILES,
   GET_REQUSTS,
   GET_APARTMENTS,
+  SET_SEARCH_DATA,
   PROFILE_LOADING,
   REQUSTS_LOADING,
   APARTMENTS_LOADING,
@@ -105,7 +106,7 @@ export const deleteApartment = id => dispatch => {
 
 
 // Edit Apartment
-export const editApartment = (id, apartmentData, history) => dispatch => {
+export const editApartment = ({ _id: id, ...apartmentData }, history) => dispatch => {
   axios
     .put(`/api/apartments/${id}`, apartmentData)
     .then(res => history.push('/dashboard'))
@@ -119,6 +120,12 @@ export const editApartment = (id, apartmentData, history) => dispatch => {
 
 // search post method
 export const searchApartment = (serachData, history) => dispatch => {
+  
+  dispatch({
+    type: SET_SEARCH_DATA,
+    payload: serachData
+  })
+  
   axios
     .post('/api/apartments/search', serachData)
     .then(res => {

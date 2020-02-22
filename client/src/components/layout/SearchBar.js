@@ -32,13 +32,15 @@ class SearchBar extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const shearchData = {
+    const searchData = {
       address: this.state.address,
       status: this.state.status,
       city: this.state.city,
     };
 
-    this.props.searchApartment(shearchData, this.props.history);
+    this.props.searchApartment(searchData, this.props.history);
+    if (this.props.onSearchApartment) this.props.onSearchApartment();
+  
   }
 
 
@@ -94,13 +96,23 @@ class SearchBar extends Component {
                     />
                   </div>
                   <div className="col-lg-3 col-md-3 col-sm-12 p-0">
-                    <Link to={{ pathname: '/search', state: this.state }}>
+                    {/* <Link to={{ pathname: '/search', state: this.state }}>
                       <input
                         type="button"
                         value="Search"
                         className="btn btn-danger wrn-btn"
                       />
-                    </Link>
+                    </Link> */}
+                    
+                        {/* <Link to={{ pathname: '/search', state: this.state }}> */}
+                      <input
+                        type="submit"
+                        value="Search"
+                        className="btn btn-danger wrn-btn"
+                        
+                      />
+                    {/* </Link>  */}
+                    
                   </div>
                 </div>
               </div>
@@ -114,11 +126,12 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
   searchApartment: PropTypes.func.isRequired,
-  apartment: PropTypes.object.isRequired
+  apartment: PropTypes.object.isRequired,
+  onSearchApartment: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
-  apartment: state.apartment
+  apartment: state.apartment,
 });
 
 export default connect(mapStateToProps, { searchApartment })(

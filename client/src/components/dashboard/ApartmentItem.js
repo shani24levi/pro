@@ -27,12 +27,19 @@ class ApartmentItem extends Component {
             <div className="apartment-owner">
                 <div id="carousel-example" className="carousel slide hidden-xs" data-ride="carousel">
                     <div className="carousel-inner">
-                        <div className="item active">
+                        <div className="item active potoSeting">
                             <div className="row">
                                 <div className="col-sm-3">
                                     <div className="col-item">
                                         <div className="photo">
-                                            <img src={apartment.mainImg} className="img-responsive" alt="a" />
+
+                                            {/* if the is no image so put defult image */}
+                                            {apartment.mainImg == '' ?
+                                            <img src="https://www.prestigecostaricaproperties.com/sites/default/files/default_images/noimage.gif" className="img-responsive imgStyle" alt="a" />
+                                            : 
+                                            <img src={apartment.mainImg} className="img-responsive imgStyle" alt="a" />
+                                        }
+                                            {/* // <img src={apartment.mainImg} className="img-responsive" alt="a" /> */}
                                         </div>
                                         <div className="info">
                                             <div className="row">

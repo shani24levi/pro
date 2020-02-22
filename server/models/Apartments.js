@@ -17,8 +17,8 @@ const ApartmentSchema = new Schema({
 
     city:{type:String},
     address :{type: String},
-    price:{type: Number},
-    apartmentNum: {type: Number},
+    price:{type: String},
+    apartmentNum: {type: String},
     priceFrom :{ type: Number },
     priceTo :{ type: Number },
     parcking: {type:String},

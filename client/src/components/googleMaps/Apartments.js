@@ -8,15 +8,15 @@ import '../../App.css'
 
 class Apartments extends Component {
   componentDidMount() {
-    console.log('this.props.searchForm',this.props.searchForm)
-    if (this.props.searchForm) {
-      // load by search
-      this.props.searchApartment(this.props.searchForm)
-    }
-    else {
-
+    // if (this.props.searchForm) {
+    //   // load by search
+    //   this.props.searchApartment(this.props.searchForm)
+    // }
+    // else {
+    if (!this.props.apartment.searchData) {
       this.props.getApartents();
     }
+    // }
   }
 
   render() {
@@ -67,11 +67,11 @@ class Apartments extends Component {
 
 Apartments.propTypes = {
   getApartents: PropTypes.func.isRequired,
-  apartment: PropTypes.object.isRequired
+  apartment: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  apartment: state.apartment
+  apartment: state.apartment,
 });
 
 export default connect(mapStateToProps, { getApartents, searchApartment })(Apartments);

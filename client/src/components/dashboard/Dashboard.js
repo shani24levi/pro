@@ -19,6 +19,10 @@ class Dashboard extends Component {
     this.props.deleteAccount();
   }
 
+  onSearchApartment = () => {
+    this.props.history.push('/search');
+  }
+
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
@@ -77,7 +81,7 @@ class Dashboard extends Component {
                 <div className="row">
                   <div className="col-md-12 text-center">
                     <h1 className="display-3 mb-4">Find Your New Home</h1>
-                    <SearchBar/>
+                    <SearchBar onSearchApartment={ this.onSearchApartment} />
                   </div>
                 </div>
               </div>

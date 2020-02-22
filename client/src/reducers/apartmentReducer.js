@@ -1,12 +1,14 @@
 import {
     GET_APARTMENT,
     GET_APARTMENTS,
-    APARTMENT_LOADING
+    APARTMENT_LOADING,
+    SET_SEARCH_DATA
   } from '../actions/types';
   
   const initialState = {
     apartment: null,
     apartments: [],
+    searchData: null,
     loading: false
   };
   
@@ -30,6 +32,12 @@ import {
           apartments: action.payload,
           loading: false
         };
+        case  SET_SEARCH_DATA:
+          console.log('action',action)
+          return {
+            ...state,
+            searchData: action.payload,
+          };
       default:
         return state;
     }

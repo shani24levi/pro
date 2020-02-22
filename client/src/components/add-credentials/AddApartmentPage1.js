@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
 import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyAC5auqilLpK4X5se3m2y8gaGjvw6MwJHs");
@@ -6,9 +6,13 @@ Geocode.enableDebug();
 /* eslint-disable import/first */
 
 import Autocomplete from 'react-google-autocomplete';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { createApartment } from '../../actions/apartmentsActions';
 
 
-class Map extends React.Component{
+
+class Map extends Component{
 constructor( props ){
   super( props );
   this.state = {
@@ -19,13 +23,29 @@ constructor( props ){
    mapPosition: {
     lat: this.props.center.lat,
     lng: this.props.center.lng
-   },
+    },
    markerPosition: {
     lat: this.props.center.lat,
     lng: this.props.center.lng
-}
+    }
   }
- }
+}
+
+onSubmit(e) {
+  e.preventDefault();
+
+  const page1Data = {
+    address:  this.state.address,
+    city: this.state.city,
+    area: this.state.area,
+    state:this.state.state,
+
+  };
+
+  if (this.props.onSearchApartment) this.props.onSearchApartment();
+}
+
+
 /**
   * Get the current address from the default map position and set those values in the state
   */

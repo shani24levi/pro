@@ -67,6 +67,7 @@ class EditApartment extends Component {
 
       // Set component fields state
       this.setState({
+        _id: apartment._id,
         city: apartment.city,
         address: apartment.address,
         price: apartment.price,
@@ -92,6 +93,7 @@ class EditApartment extends Component {
     e.preventDefault();
 
     const profileData = {
+        _id: this.state._id,
         city: this.state.city,
         address: this.state.address,
         price: this.state.price,

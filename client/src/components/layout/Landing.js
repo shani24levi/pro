@@ -18,6 +18,10 @@ class Landing extends Component {
     }
   }
 
+  onSearchApartment = () => {
+    this.props.history.push('/search');
+  }
+
   render() {
     let addModalClose =()=> this.setState({addModalShow:false});
     return (
@@ -39,7 +43,7 @@ class Landing extends Component {
                   Login
                 </Link>
                 
-                <SearchBar/>
+                <SearchBar onSearchApartment={ this.onSearchApartment } />
 
               </div>
             </div>
