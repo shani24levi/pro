@@ -1,0 +1,28 @@
+#group {
+	width: 30%;
+	height: 500px;
+	float: left;
+	margin: 10px;
+	background-color: grey;
+}
+
+#result {
+	width: 65%;
+	height: 500px;
+	background-color: grey;
+	margin: 10px;
+	float: left;
+}
+
+.img {
+	width: 110px;
+	height: 100px;
+	float: left;
+	margin: 10px;
+	border: 1px solid white;
+}
+
+#result img{
+	width: 97%;
+	height: 480px;
+}

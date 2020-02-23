@@ -1,0 +1,64 @@
+/* style for SearchBar componanta */
+
+.search-sec{
+    /* background: #1A4668;padding: 2rem; */
+    background: hsl(120, 0%, 47%);
+    padding: 2rem;
+    border-radius: 30px 30px 30px 30px;
+}
+.search-slt{
+    display: block;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #55595c;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    height: calc(3rem + 2px) !important;
+    border-radius:0;
+}
+.wrn-btn{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+     height: calc(3rem + 2px) !important;
+     border-radius:0;
+     background: linear-gradient(99.42deg, #F8A170 14.73%, #FFCD61 97.52%);
+     border-radius: 10px;
+     border-color: #FFCD61 !important;
+    }
+     
+
+ 
+.logoNav {
+    font-family: 'Sofia';
+    font-size: 35px;
+    color: #F8A170 !important;
+    text-shadow: 2px 2px  #FFCD61 !important;
+}
+
+.iconColor {
+    display: none !important;
+    color: #F8A170 !important;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+
+@media(max-width:570px) {
+    .iconColor {
+        display: block !important;
+        float: left;
+    }
+    .footer {
+        display: none !important;
+    }
+
+}
