@@ -10,7 +10,10 @@
     position: absolute;
 }
 
-
+.infoSearch{
+    width: 419%;
+    margin-left: 0px
+}
 
 @media(max-width:570px) {
     .apartment{
@@ -25,5 +28,10 @@
      height: 45%;
      position: absolute;
    
+    }
+
+    .infoSearch {
+        width: 100%;
+        margin-left: 0px;
     }
 }

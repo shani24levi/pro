@@ -12,6 +12,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 
+import '../dashboard/style.css'
+
 
 
 class ApartmentItem extends Component {
@@ -20,27 +22,43 @@ class ApartmentItem extends Component {
 
     return (
       <div className="apartment-main">
-        <div className="col-md-12 col-lg-12">
-          <div className="tracking-pre"></div>
-          <div className="tracking">
-            <div className="tracking-list">
-              <div className="tracking-item">
-                <div className="tracking-icon status-intransit">
-                  <img className="rounded-circle" />
-                </div>
-                <div className="tracking-date">
-                  <Moment format="DD/MM/YYYY">{apartment.date}</Moment>
-                  <span> {apartment.city}{' '}{apartment.address}{' '}</span></div>
-                <div className="tracking-content">{apartment.price}<span>{apartment.openANDpublic}</span></div>
+                        <div id="carousel-example" className="carousel slide hidden-xs" data-ride="carousel">
+                    <div className="carousel-inner">
+                        <div className="item active potoSeting">
+                            <div className="row infoSearch">
+                                <div className="col-sm-3">
+                                    <div className="col-item">
+                                        <div className="photo">
 
-                {/* clike here and it allso sents the apartment prors (detils) to page caled /apartment/${apartment._id} */}
-                <Link to={{ pathname: `/apartment/${apartment._id}`, state: apartment }} className="btn btn-info">
-                  View {apartment._id}
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+                                            {/* if the is no image so put defult image */}
+                                            {apartment.mainImg == '' ?
+                                            <img src="https://www.prestigecostaricaproperties.com/sites/default/files/default_images/noimage.gif" className="img-responsive imgStyle" alt="a" />
+                                            : 
+                                            <img src={apartment.mainImg} className="img-responsive imgStyle" alt="a" />
+                                        }
+                                        </div>
+                                        <div className="info">
+                                            <div className="row ">
+                                                <div className="price col-md-6">
+                                                    <h5>
+                                                        {apartment.address}{' '} {apartment.city}
+                                                    </h5>
+                                                    <h5 className="price-text-color">
+                                                        {apartment.price}</h5>
+                                                </div>
+                                                <div className="rating hidden-sm col-md-6">
+                                                    <Link to={{ pathname: `/apartment/${apartment._id}`, state: apartment }} className="btn btn-info">
+                                                      View 
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                            <div className="separator clear-left">
+                                              
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </div></div></div></div></div>
+   
       </div>
     );
   }

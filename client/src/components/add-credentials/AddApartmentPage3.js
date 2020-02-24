@@ -38,7 +38,6 @@ class AddApartmentPage3 extends Component {
 
       // Set component fields state
       this.setState({
-        _id: apartment._id,
         mainImg: apartment.mainImg,
         desciption: apartment.desciption,
         picturs: apartment.picturs,

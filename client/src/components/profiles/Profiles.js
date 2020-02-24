@@ -33,7 +33,7 @@ class Profiles extends Component {
             <div className="col-md-12">
               <h1 className="display-4 text-center">Hot Apartments</h1>
               <p className="lead text-center">
-              The most rated apartments by users 
+              see profiles owners 
               </p>
               {profileItems}
             </div>

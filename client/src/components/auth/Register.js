@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
+import '../layout/style.css'
 
 class Register extends Component {
   constructor() {
@@ -117,16 +118,7 @@ class Register extends Component {
                   options={options}
                   error={errors.role}
                 />
-{/* 
-                <TextFieldGroup
-                  placeholder="shearcher or landlod"
-                  name="role"
-                  type="role"
-                  value={this.state.role}
-                  onChange={this.onChange}
-                  error={errors.role}
-                /> */}
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-danger wrn-btn" />
               </form>
             </div>
           </div>

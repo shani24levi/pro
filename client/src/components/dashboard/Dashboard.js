@@ -91,26 +91,18 @@ class Dashboard extends Component {
         //if user is owner so show his apartments: 
         <div className="apartment-owner-show">
           <ApartmentsOwner /> 
-          <Link to="/add-apartment" className="btn btn-lg btn-info">
-              Add New Apartment
-            </Link>
+
+          <Link to='/add-apartment'>
+            <input
+              type="button"
+              value="Add New Apartment"
+              className="btn btn-danger wrn-btn buttAdd"
+            />
+        </Link>
+
         </div>
         }
-
-        {/* <div className="landing small">
-          <div className="dark-overlay landing-inner text-light small">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12 text-center">
-                  <h1 className="display-3 mb-4">Find Your New Home</h1>
-                  {/* {true ? 'ok' :  'no'}
-                  {yser.role  == 'x' && 'ok2'} */}
-                {/* </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-              
+            
       <div className="dashboard" style={{marginTop: '9%'}}>
         <div className="container">
           <div className="row" >

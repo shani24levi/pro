@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 //import classname from 'classnames';
 import { loginUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
+import '../layout/style.css'
 
 class Login extends Component {
   constructor() {
@@ -76,8 +77,8 @@ class Login extends Component {
                   onChange={this.onChange}
                   error={errors.password}
                 />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
+                <input type="submit" className="btn btn-danger wrn-btn " />
+              </form>  
             </div>
           </div>
         </div>

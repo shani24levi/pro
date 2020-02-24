@@ -112,18 +112,18 @@ function ApartmentDetails(props) {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph>Method:</Typography>
+                    <Typography paragraph>Info:</Typography>
                     <Typography paragraph>
-                        Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                        minutes.
+                        {apartment.disciption}
             </Typography>
                     <Typography paragraph>
-
+                        {apartment.address}
                     </Typography>
                     <Typography paragraph>
-
+                        { apartment.disciption}
                     </Typography>
                     <Typography>
+                    
 
                     </Typography>
                 </CardContent>
@@ -149,4 +149,3 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, { getApartentsByApartmentId, getCurrentApartment })(
     (ApartmentDetails)
 );
-

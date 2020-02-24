@@ -58,7 +58,6 @@ class AddApartmentPage2 extends Component {
 
       // Set component fields state
       this.setState({
-        _id: apartment._id,
         price: apartment.price,
         apartmentNum: apartment.apartmentNum,
         parcking: apartment.parcking,
@@ -66,7 +65,6 @@ class AddApartmentPage2 extends Component {
         saftyChack: apartment.saftyChack,
         rooms: apartment.rooms,
         pats: apartment.pats,
-        status: apartment.status
       });
     }
   }

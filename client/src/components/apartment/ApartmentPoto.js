@@ -96,4 +96,3 @@ ApartmentPotos.propTypes = {
  *   },
  * ];
  */
-

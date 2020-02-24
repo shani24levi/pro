@@ -28,7 +28,7 @@ class ApartmentItem extends Component {
                 <div id="carousel-example" className="carousel slide hidden-xs" data-ride="carousel">
                     <div className="carousel-inner">
                         <div className="item active potoSeting">
-                            <div className="row">
+                            <div className="row centerInfo">
                                 <div className="col-sm-3">
                                     <div className="col-item">
                                         <div className="photo">
@@ -39,10 +39,9 @@ class ApartmentItem extends Component {
                                             : 
                                             <img src={apartment.mainImg} className="img-responsive imgStyle" alt="a" />
                                         }
-                                            {/* // <img src={apartment.mainImg} className="img-responsive" alt="a" /> */}
                                         </div>
                                         <div className="info">
-                                            <div className="row">
+                                            <div className="row ">
                                                 <div className="price col-md-6">
                                                     <h5>
                                                         {apartment.address}{' '} {apartment.city}

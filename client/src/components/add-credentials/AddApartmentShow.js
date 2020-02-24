@@ -38,7 +38,6 @@ class AddApartmentShow extends Component {
 
       // Set component fields state
       this.setState({
-        _id: apartment._id,
         mainImg: apartment.mainImg,
         desciption: apartment.desciption,
         picturs: apartment.picturs,
@@ -64,6 +63,9 @@ class AddApartmentShow extends Component {
   render() {
     const { apartment } = this.props.apartment || [];;
     const { errors } = this.state;
+    const data = this.props.location.state;
+    console.log('eee', data);
+
 
 
     console.log('AddApartmentShow', this.props)
@@ -78,49 +80,25 @@ class AddApartmentShow extends Component {
               </Link>
               <h1 className="display-4 text-center">Rental Apartment</h1>
 
-              <div class="thumbnail card">
-                <article class="search-result row">
-                  <div class="col-xs-12 col-sm-12 col-md-3">
-                    <a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
+              <div className="item col-xs-4 col-lg-4">
+                <div className="thumbnail card">
+                  <div className="img-event">
+                    <img className="group list-group-image img-fluid" src={data.mainImg} alt="" />
                   </div>
-                  <div class="col-xs-12 col-sm-12 col-md-2">
-                    <ul class="meta-search">
-                      <li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>
-                      <li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
-                      <li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li>
-                    </ul>
-                  </div>
-                  <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-                    <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
-                    <span class="plus"><a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
-                  </div>
-                  <span class="clearfix borda"></span>
-                </article>
-              </div>
-
-
-
-
-              <div class="item col-xs-4 col-lg-4">
-                <div class="thumbnail card">
-                  <div class="img-event">
-                    <img class="group list-group-image img-fluid" src="http://placehold.it/400x250/000/fff" alt="" />
-                  </div>
-                  <div class="caption card-body">
-                    <h4 class="group card-title inner list-group-item-heading">
-                      Product title</h4>
-                    <p class="group inner list-group-item-text">
-                      Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                                sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    <div class="row">
-                      <div class="col-xs-12 col-md-6">
-                        <p class="lead">
-                          $21.000</p>
+                  <div className="caption card-body">
+                    <h4 className="group card-title inner list-group-item-heading">
+                      {data.address}</h4>
+                    <h6 className="group card-title inner list-group-item-heading">
+                      {data.area}</h6>
+                      
+                    <p className="group inner list-group-item-text">
+                      {data.desciption} </p>
+                    <div className="row">
+                      <div className="col-xs-12 col-md-6">
+                        <p className="lead">
+                          {data.price}</p>
                       </div>
-                      <div class="col-xs-12 col-md-6">
-                        <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
-                      </div>
+                   
                     </div>
                   </div>
                 </div>

@@ -37,13 +37,13 @@ class MyRentals extends Component {
     ));
     return (
       <div>
-        <h4 className="mb-4">Experience Credentials</h4>
+        <h4 className="mb-4">My Rental History</h4>
         <table className="table">
           <thead>
             <tr>
               <th>address</th>
               <th>city</th>
-              <th>from</th>
+              <th>laft cuse</th>
               <th />
             </tr>
             {myReantals}

@@ -108,5 +108,3 @@ export default connect(mapStateToProps)((ApartmentView));
  *   },
  * ];
  */
-
-

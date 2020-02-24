@@ -8,9 +8,9 @@ module.exports = function validatMyApartment(data) {
   data.saftyChack = !isEmpty(data.saftyChack) ? data.saftyChack : '';
   data.desciption = !isEmpty(data.desciption) ? data.desciption : '';
 
-  if (Validator.isEmpty(data.city)) {
-    errors.city = 'city field is required';
-  }
+  // if (Validator.isEmpty(data.city)) {
+  //   errors.city = 'city field is required';
+  // }
 
   if (Validator.isEmpty(data.address)) {
     errors.address = 'address field is required';
